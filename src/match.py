@@ -1,0 +1,134 @@
+import numpy
+
+days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+time_slots = [ '8:00', '8:30', '9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30',
+         '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30',
+         '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00', '22:30',
+         '23:00', '23:30']
+
+class Person(object):
+    """
+    This class represents either a Yale Guild member or a Heeler.
+
+    Attributes:
+        availability: a dictionary of lists. key is day of the week. value is list of 0s and 1s
+            that indicate whether this person is available during a half-hour duration between
+            8:00 AM and 11:30 PM
+        name: proper name of this person
+        netid: netid
+    """
+    def __repr__(self):
+        person = "Person: %s, %s, %s" % (self.name, self.netid, self.email)
+        return person
+
+    def __init__(self, availability, name, netid, email):
+        self.availability = availability
+        self.name = name
+        self.netid = netid
+        self.email = email
+
+class Pairing(object):
+    """
+    This class represents a pairing between a guild member and a Heeler.
+
+    Attributes:
+        heeler: get the Person instance that represents the Heeler
+        teacher: get the Person instance that represents the teacher
+    """
+
+    def __init__(self, teacher, heeler):
+        self.teacher = teacher
+        self.heeler = heeler
+        self.cost = 0
+
+    def add_cost(self, cost):
+        self.cost += cost
+
+
+
+def read_names(file_name, group):
+    """
+    Reads in a tab-separated file (TSV) with people's information and converts them to
+    instances of the Person class.
+
+    params
+        file_name: name of the file as a string
+        group: an empty list in which the instances of Person should be put
+    """
+    fd = open(file_name, 'r')
+
+    # skip first line (column names)
+    fd.readline()
+
+    for line in fd:
+        attributes = line.split("\t")
+        name = attributes[1]
+        netid = attributes[2]
+        email = attributes[3]
+
+        i = 4
+        availability = {}
+        for d in days_of_week:
+            times = attributes[i]
+            available_list = []
+            for t in time_slots:
+                if t in times:
+                    available_list.append(1)
+                else:
+                    available_list.append(0)
+            availability[d] = available_list
+            i += 1
+
+        person = Person(availability, name, netid, email)
+        group.append(person)
+
+
+def calculate_costs(teachers, heelers):
+    """
+    Calculate the cost of a teacher teaching a Heeler for each pair of teacher and Heeler
+
+    len of teachers < len of heelers
+    """
+
+    pairings = []
+    for t in teachers:
+        for h in heelers:
+            p = Pairing(t, h)
+            pairings.append(p)
+
+    for p in pairings:
+        for d in days_of_week:
+            for t in range(len(time_slots)):
+                teacher = p.teacher
+                heeler = p.heeler
+
+                if teacher.availability[d][t] + heeler.availability[d][t] == 1:
+                    p.add_cost(100)
+
+               
+
+
+
+guild_members = []
+# heelers = []
+# 
+# read_names('heelers.tsv', heelers)
+
+read_names('guild_members.tsv', guild_members)
+
+
+
+
+for g in guild_members:
+    print(g)
+    print(g.availability)
+
+
+
+
+
+
+        
+
+
+

@@ -1,0 +1,8 @@
+Input is in the form of
+
+<Name>, <1 if available at Sunday 8:00 AM, else 0>, ...
+
+
+match teachers to students first
+
+then schedule them
