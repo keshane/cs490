@@ -39,10 +39,45 @@ class Pairing(object):
     def __init__(self, teacher, heeler):
         self.teacher = teacher
         self.heeler = heeler
-        self.cost = 0
+        self.availabilities = add_availabilities(teacher.availability, heeler_availability)
 
-    def add_cost(self, cost):
-        self.cost += cost
+        # calculate cost should always come after add_availabilities()
+        self.cost = calculate_cost()
+
+
+    def calculate_cost(self):
+        cost = 0
+        has_matching_time = False
+
+        for d in days_of_week:
+            for t in range(len(time_slots)):
+                if self.availabilities[d][t] == 1:
+                    has_matching_time = True
+                else:
+                    cost += 1
+
+        if not has_matching_time:
+            cost += 1000
+
+        return cost
+    
+
+    def add_availabilities(self, teacher_availability, heeler_availability):
+        availabilities = {}
+        for d in days_of_week:
+            times = []
+            for t in range(len(time_slots)):
+                if teacher_availability[d][t] and heeler_availability[d][t]:
+                    times.append(1)
+                else:
+                    times.append(0)
+
+            self.availabilities[d] = times
+
+        return availabilities
+
+
+
 
 
 
@@ -83,30 +118,20 @@ def read_names(file_name, group):
         group.append(person)
 
 
-def calculate_costs(teachers, heelers):
+def create_pairings(teachers, heelers):
     """
     Calculate the cost of a teacher teaching a Heeler for each pair of teacher and Heeler
 
     len of teachers < len of heelers
     """
 
-    pairings = []
+    pairings = {}
     for t in teachers:
         for h in heelers:
             p = Pairing(t, h)
-            pairings.append(p)
+            pairings[t.repr() + h.repr()] = p
 
-    for p in pairings:
-        for d in days_of_week:
-            for t in range(len(time_slots)):
-                teacher = p.teacher
-                heeler = p.heeler
-
-                if teacher.availability[d][t] + heeler.availability[d][t] == 1:
-                    p.add_cost(100)
-
-               
-
+    return pairings
 
 
 guild_members = []
