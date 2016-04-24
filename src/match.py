@@ -17,6 +17,8 @@ class Person(object):
         name: proper name of this person
         netid: netid
     """
+
+
     def __repr__(self):
         person = "Person: %s, %s, %s" % (self.name, self.netid, self.email)
         return person
@@ -125,6 +127,8 @@ def create_pairings(teachers, heelers):
     len of teachers < len of heelers
     """
 
+    # key is the concatenations of the repr of the teacher and student
+    # value is a Pairing instance
     pairings = {}
     for t in teachers:
         for h in heelers:
@@ -132,6 +136,41 @@ def create_pairings(teachers, heelers):
             pairings[t.repr() + h.repr()] = p
 
     return pairings
+
+
+def create_matrix(pairings, teachers, heelers):
+    assert len(teachers) < len(heelers)
+
+    num_teachers = len(teachers)
+
+    teacher_index_map = {}
+    heeler_index_map = {}
+
+    mat = numpy.zeros(shape=(num_teachers, num_teachers))
+    
+    for t in range(num_teachers):
+        for h in range(num_teachers):
+            mat[t][h] = pairings[teachers[t].repr() + heelers[h].repr()].cost
+
+    return mat
+
+def hungarian(matrix):
+    min_costs = numpy.amin(matrix, axis=1)
+
+    matrix = matrix - min_costs.transpose()
+
+    min_costs = numpy.amin(matrix, axis=0)
+
+    matrix = matrix - min_costs
+
+    cols_covered = [False for j in range(matrix.shape[1])]
+    rows_covered = [False for j in range(matrix.shape[0])]
+
+    
+
+
+
+    
 
 
 guild_members = []
