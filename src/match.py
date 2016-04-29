@@ -6,6 +6,9 @@ time_slots = [ '8:00', '8:30', '9:00', '9:30', '10:00', '10:30', '11:00', '11:30
          '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00', '22:30',
          '23:00', '23:30']
 
+STARRED = 1
+PRIMED = 2
+
 class Person(object):
     """
     This class represents either a Yale Guild member or a Heeler.
@@ -165,6 +168,57 @@ def hungarian(matrix):
 
     cols_covered = [False for j in range(matrix.shape[1])]
     rows_covered = [False for j in range(matrix.shape[0])]
+
+    # 0 is not marked, 1 is starred, 2 is primed
+    marked = numpy.empty_like(matrix)
+    marked.fill(0)
+
+    count = 0
+    for i in range(matrix.shape[0]):
+        for j in range(matrix.shape[1]):
+            if matrix[i][j] == 0 and not rows_covered[j] == True and not cols_covered[j] == True:
+                starred[i][j] = STARRED 
+                rows_covered[i] = True
+                cols_covered[j] = True
+                count += 1
+
+                # break because this row has been covered already
+                break
+
+    rows_covered[:] = False
+
+    if count == matrix.shape[1]:
+        # done
+
+    for i in range(matrix.shape[0]):
+        if rows_covered[i]:
+            continue
+        for j in range(matrix.shape[1]):
+            if cols_covered[j]:
+                continue
+
+            if matrix[i][j] == 0:
+                marked[i][j] = PRIMED
+
+                has_star = False
+
+                for k in range(matrix.shape[1]):
+                    if marked[i][k] == STARRED:
+                        rows_covered[i] = True
+                        cols_covered[j] = False
+                        has_star = True
+                        break
+
+                if not has_star:
+                    alternat
+
+
+
+
+
+
+
+
 
     
 
