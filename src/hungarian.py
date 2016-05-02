@@ -18,6 +18,7 @@ class Hungarian(object):
 
         self.marked = numpy.empty_like(cost_matrix)
         self.marked.fill(0)
+        self.state = 0
 
     def run(self):
 
@@ -35,7 +36,16 @@ class Hungarian(object):
 
                     # break because this row has been covered already
                     break
-        _step1()
+
+        self.state = 1 
+
+        states = {1: _step1, 2 : _step2, 3: _step3}
+
+        while not self.state == 4:
+            if self.state == 2:
+                states[self.state](*(ret_val))
+            else:
+                ret_val = states[self.state]()
 
     def _is_covered(self, i, j):
         if self.rows_covered[i] or self.cols_covered[j]:
@@ -60,9 +70,8 @@ class Hungarian(object):
 
                     # -1 means there was no star in this row
                     if starred_col == -1:
-                        _step2(i, j)
-                        if self.finished:
-                            return
+                        self.state = 2
+                        return
                     else:
                         self.rows_covered[i] = True
                         self.cols_covered[starred_col] = False
@@ -96,6 +105,7 @@ class Hungarian(object):
 
         if _all_cols_covered():
             finished = True
+            self.state = 4
 
     def _step3():
         min_val = _get_smallest()
@@ -110,8 +120,7 @@ class Hungarian(object):
                 for i in range(self.nrows):
                     matrix[i][j] = matrix[i][j] - min_val
 
-        _step1()
-
+        self.state = 1
 
 
     def _get_smallest(self):
@@ -142,7 +151,7 @@ class Hungarian(object):
     def _toggle_zero_in_sequence(self, i, j):
         if self.marked[i][j] == STAR:
             self.marked[i][j] = 0
-        else if self.marked[i][j] == PRIME:
+        elif self.marked[i][j] == PRIME:
             self.marked[i][j] = STAR
         else:
             print("impossible")
@@ -162,39 +171,3 @@ class Hungarian(object):
         return -1
 
 
-
-
-                
-
-
-
-    def _is_starred(i, j):
-        if self.marked[i][j] == STAR:
-            return True
-        else:
-            return False
-
-     if count == matrix.shape[1]:
-        # done
-
-    for i in range(matrix.shape[0]):
-        if rows_covered[i]:
-            continue
-        for j in range(matrix.shape[1]):
-            if cols_covered[j]:
-                continue
-
-            if matrix[i][j] == 0:
-                marked[i][j] = PRIME
-
-                has_star = False
-
-                for k in range(matrix.shape[1]):
-                    if marked[i][k] == STAR:
-                        rows_covered[i] = True
-                        cols_covered[j] = False
-                        has_star = True
-                        break
-
-                if not has_star:
-                    alternat

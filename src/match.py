@@ -1,4 +1,5 @@
 import numpy
+import sys
 
 days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 time_slots = [ '8:00', '8:30', '9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30',
@@ -21,12 +22,14 @@ class Person(object):
         netid: netid
     """
 
-
     def __repr__(self):
-        person = "Person: %s, %s, %s" % (self.name, self.netid, self.email)
+        person = "Person: %s, %s" % (self.name, self.netid)
         return person
 
-    def __init__(self, availability, name, netid, email):
+    def __str__(self):
+        return self.name
+
+    def __init__(self, availability, name, netid, email=''):
         self.availability = availability
         self.name = name
         self.netid = netid
@@ -41,13 +44,18 @@ class Pairing(object):
         teacher: get the Person instance that represents the teacher
     """
 
+    def __str__(self):
+        return "Pairing(Teacher: %s, Heeler: %s" % (self.teacher, self.heeler)
+
+    def __repr__(self):
+        return "Pairing(Teacher: %s, Heeler: %s" % (self.teacher, self.heeler)
     def __init__(self, teacher, heeler):
         self.teacher = teacher
         self.heeler = heeler
-        self.availabilities = add_availabilities(teacher.availability, heeler_availability)
+        self.availabilities = self.add_availabilities(teacher.availability, heeler.availability)
 
         # calculate cost should always come after add_availabilities()
-        self.cost = calculate_cost()
+        self.cost = self.calculate_cost()
 
 
     def calculate_cost(self):
@@ -77,7 +85,7 @@ class Pairing(object):
                 else:
                     times.append(0)
 
-            self.availabilities[d] = times
+            availabilities[d] = times
 
         return availabilities
 
@@ -104,12 +112,15 @@ def read_names(file_name, group):
         attributes = line.split("\t")
         name = attributes[1]
         netid = attributes[2]
-        email = attributes[3]
 
-        i = 4
+        # for real data
+        #   email = attributes[3]
+        #   i = 4
+
+        i = 3
         availability = {}
         for d in days_of_week:
-            times = attributes[i]
+            times = attributes[i].split(",")
             available_list = []
             for t in time_slots:
                 if t in times:
@@ -119,7 +130,7 @@ def read_names(file_name, group):
             availability[d] = available_list
             i += 1
 
-        person = Person(availability, name, netid, email)
+        person = Person(availability, name, netid)
         group.append(person)
 
 
@@ -136,7 +147,7 @@ def create_pairings(teachers, heelers):
     for t in teachers:
         for h in heelers:
             p = Pairing(t, h)
-            pairings[t.repr() + h.repr()] = p
+            pairings[repr(t) + repr(h)] = p
 
     return pairings
 
@@ -153,74 +164,9 @@ def create_matrix(pairings, teachers, heelers):
     
     for t in range(num_teachers):
         for h in range(num_teachers):
-            mat[t][h] = pairings[teachers[t].repr() + heelers[h].repr()].cost
+            mat[t][h] = pairings[repr(teachers[t]) + repr(heelers[h])].cost
 
     return mat
-
-def hungarian(matrix):
-    min_costs = numpy.amin(matrix, axis=1)
-
-    matrix = matrix - min_costs.transpose()
-
-    min_costs = numpy.amin(matrix, axis=0)
-
-    matrix = matrix - min_costs
-
-    cols_covered = [False for j in range(matrix.shape[1])]
-    rows_covered = [False for j in range(matrix.shape[0])]
-
-    # 0 is not marked, 1 is starred, 2 is primed
-    marked = numpy.empty_like(matrix)
-    marked.fill(0)
-
-    count = 0
-    for i in range(matrix.shape[0]):
-        for j in range(matrix.shape[1]):
-            if matrix[i][j] == 0 and not rows_covered[j] == True and not cols_covered[j] == True:
-                starred[i][j] = STARRED 
-                rows_covered[i] = True
-                cols_covered[j] = True
-                count += 1
-
-                # break because this row has been covered already
-                break
-
-    rows_covered[:] = False
-
-    if count == matrix.shape[1]:
-        # done
-
-    for i in range(matrix.shape[0]):
-        if rows_covered[i]:
-            continue
-        for j in range(matrix.shape[1]):
-            if cols_covered[j]:
-                continue
-
-            if matrix[i][j] == 0:
-                marked[i][j] = PRIMED
-
-                has_star = False
-
-                for k in range(matrix.shape[1]):
-                    if marked[i][k] == STARRED:
-                        rows_covered[i] = True
-                        cols_covered[j] = False
-                        has_star = True
-                        break
-
-                if not has_star:
-                    alternat
-
-
-
-
-
-
-
-
-
-    
 
 
 
@@ -228,18 +174,21 @@ def hungarian(matrix):
 
 
 guild_members = []
-# heelers = []
+heelers = []
 # 
 # read_names('heelers.tsv', heelers)
 
-read_names('guild_members.tsv', guild_members)
+guildies_file = sys.argv[1]
+heelers_file = sys.argv[2]
+read_names(guildies_file, guild_members)
+read_names(heelers_file, heelers)
+
+pairings = create_pairings(guild_members, heelers)
 
 
 
-
-for g in guild_members:
-    print(g)
-    print(g.availability)
+for p in pairings:
+    print(p)
 
 
 
