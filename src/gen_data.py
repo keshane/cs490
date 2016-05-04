@@ -1,40 +1,39 @@
 import random
 import string
-
-days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-time_slots = [ '8:00', '8:30', '9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30',
-         '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30',
-         '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00', '22:30',
-         '23:00', '23:30']
+import numpy
+from collections import defaultdict
+from days_and_times import *
 
 file_name = "guildies.tsv"
 fd = open(file_name, 'r')
 fd.readline()
 
+# keeps track of number of students available at a given time slot
 stats = {}
-num_avail_times = {}
+num_times_per_day = {}
 
 for d in days_of_week:
-    stats[d] = {}
-    num_avail_times[d] = 0
+    stats[d] = defaultdict(list)
+    num_times_per_day[d] = [] 
 
 # how many people in total
 count = 0
+# keep track of how many times each time slot was chosen
 for line in fd:
     attributes = line.split("\t")
 
-    i = 3 # index into day of week in input file
+    i = 4 # index into day of week in input file
     for d in days_of_week:
         n_times_avail = 0
         times = [x.strip() for x in attributes[i].split(",")]
         for t in time_slots:
             if t in times:
-                stats[d][t] = stats[d].get(t, 0) + 1
+                stats[d][t].append(1)
                 n_times_avail += 1
             else:
-                stats[d][t] = stats[d].get(t, 0)
+                stats[d][t].append(0)
 
-        num_avail_times[d] += n_times_avail
+        num_times_per_day[d].append(n_times_avail)
         i += 1
 
     
@@ -42,22 +41,36 @@ for line in fd:
 
 # divide counts by total number of people
 calc_stats = {}
+calc_num_times_per_day = {}
 for d in days_of_week:
+    npy_arr = numpy.array(num_times_per_day[d])
+    # sample standard deviation
+    std_dev = numpy.std(npy_arr, ddof=1)
+    mean = numpy.mean(npy_arr)
+    calc_num_times_per_day[d] = (mean, std_dev)
 
     day = {}
-    num_avail_times[d] = num_avail_times[d] / count
+    for t in time_slots:
+        time_npy_arr = numpy.array(stats[d][t])
 
-    for time in stats[d]:
-        c = stats[d][time]
+        time_std_dev = numpy.std(time_npy_arr, ddof=1)
+        time_mean = numpy.mean(time_npy_arr)
 
-        day[time] = float(c) / count
+        day[t] = (time_mean, time_std_dev) 
 
     calc_stats[d] = day
 
-print(num_avail_times)
+print(num_times_per_day)
+print(calc_num_times_per_day)
+print(stats)
+print(calc_stats)
 
+# use results to generate sample heelers 
 with open('heelers.tsv', 'a') as heeler_file:
     heeler_file.write("blah blah blah first line\r\n")
+
+    # represents freshman, sophomore, graduate/professional student
+    possible_years = [1, 2, 5]
 
     for x in range(50):
         name_len = random.randint(3, 10)
@@ -66,22 +79,32 @@ with open('heelers.tsv', 'a') as heeler_file:
         netid = ''.join(random.choice(string.ascii_lowercase) for _ in range(netid_len))
         netid = netid + ''.join(random.choice(string.digits) for _ in range(netid_len))
 
-        line = "2016-05-06\t%s\t%s" % (name, netid)
+        # musical experience ranked from 1 to 10
+        # assumes that everyone has a decent amount of musical experience
+        musical_exp = random.gauss(7, 2)
+        if musical_exp > 10:
+            musical_exp = 10
+        musical_exp = str(musical_exp)
+
+        year = random.choice(possible_years)
+
+        line = "2016-05-06\t%s\t%s\t%s\t%s" % (name, netid, musical_exp, year)
 
         for d in days_of_week:
             times = []
 
             # -2, +2 for variability
-            n_times_avail_this_day = random.randint(num_avail_times[d] - 2, num_avail_times[d] + 2)
+            n_times_avail_this_day = random.gauss(calc_num_times_per_day[d][0],
+                                                  calc_num_times_per_day[d][1])
 
             # shuffle order of times so that earlier times aren't favored by
-            # the num_avail_times
+            # the num_times_per_day
             t_s = time_slots[:]
             random.shuffle(t_s)
             for t in t_s:
                 chance = random.random()
 
-                if chance <= calc_stats[d][t] and n_times_avail_this_day > 0:
+                if chance <= random.gauss(calc_stats[d][t][0], calc_stats[d][t][1]) and n_times_avail_this_day > 0:
                     n_times_avail_this_day -= 1
                     times.append(t)
 

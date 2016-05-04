@@ -1,14 +1,18 @@
+from __future__ import print_function
 import numpy
 import sys
+import hungarian
+import schedule_pairings
+from days_and_times import *
 
-days_of_week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-time_slots = [ '8:00', '8:30', '9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30',
-         '13:00', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00', '17:30',
-         '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00', '22:30',
-         '23:00', '23:30']
+def print_availability(a):
+    for d in days_of_week:
+        print(d)
+        for t in time_slots:
+            if a[d][t] == 1:
+                print(t, end=" ")
 
-STARRED = 1
-PRIMED = 2
+        print("")
 
 class Person(object):
     """
@@ -29,11 +33,13 @@ class Person(object):
     def __str__(self):
         return self.name
 
-    def __init__(self, availability, name, netid, email=''):
+    def __init__(self, availability, name, netid, email='', musical_exp=1, year=3):
         self.availability = availability
         self.name = name
         self.netid = netid
         self.email = email
+        self.musical_exp = musical_exp
+        self.year = year
 
 class Pairing(object):
     """
@@ -45,10 +51,10 @@ class Pairing(object):
     """
 
     def __str__(self):
-        return "Pairing(Teacher: %s, Heeler: %s" % (self.teacher, self.heeler)
+        return "Pairing(Teacher: %s, Heeler: %s)" % (self.teacher, self.heeler)
 
     def __repr__(self):
-        return "Pairing(Teacher: %s, Heeler: %s" % (self.teacher, self.heeler)
+        return "Pairing(Teacher: %s, Heeler: %s)" % (self.teacher, self.heeler)
     def __init__(self, teacher, heeler):
         self.teacher = teacher
         self.heeler = heeler
@@ -63,7 +69,7 @@ class Pairing(object):
         has_matching_time = False
 
         for d in days_of_week:
-            for t in range(len(time_slots)):
+            for t in time_slots:
                 if self.availabilities[d][t] == 1:
                     has_matching_time = True
                 else:
@@ -78,23 +84,29 @@ class Pairing(object):
     def add_availabilities(self, teacher_availability, heeler_availability):
         availabilities = {}
         for d in days_of_week:
-            times = []
-            for t in range(len(time_slots)):
-                if teacher_availability[d][t] and heeler_availability[d][t]:
-                    times.append(1)
+            times = {} 
+            for t in time_slots:
+                if teacher_availability[d][t] == 1 and heeler_availability[d][t] == 1:
+                    times[t] = 1
                 else:
-                    times.append(0)
+                    times[t] = 0
 
             availabilities[d] = times
 
         return availabilities
 
+    def is_available_at(self, day, time):
+        if self.availabilities[day][time] == 1:
+            return True
+        else:
+            return False
 
 
 
 
 
-def read_names(file_name, group):
+
+def read_names(file_name, group, are_heelers=False):
     """
     Reads in a tab-separated file (TSV) with people's information and converts them to
     instances of the Person class.
@@ -113,24 +125,31 @@ def read_names(file_name, group):
         name = attributes[1]
         netid = attributes[2]
 
+        if are_heelers:
+            musical_exp = int(attributes[3])
+            i = 5
+        else:
+            i = 4
+
         # for real data
         #   email = attributes[3]
         #   i = 4
 
-        i = 3
         availability = {}
         for d in days_of_week:
-            times = attributes[i].split(",")
-            available_list = []
+            times = [x.strip() for x in attributes[i].split(",")]
+            available_map = {}
+
             for t in time_slots:
                 if t in times:
-                    available_list.append(1)
+                    available_map[t] = 1
                 else:
-                    available_list.append(0)
-            availability[d] = available_list
+                    available_map[t] = 0
+
+            availability[d] = available_map
             i += 1
 
-        person = Person(availability, name, netid)
+        person = Person(availability, name, netid, musical_exp=musical_exp, year=year)
         group.append(person)
 
 
@@ -185,17 +204,21 @@ read_names(heelers_file, heelers)
 
 pairings = create_pairings(guild_members, heelers)
 
+matrix = create_matrix(pairings, guild_members, heelers)
 
+hun = hungarian.Hungarian(matrix)
+paired_matrix = hun.run()
 
-for p in pairings:
-    print(p)
+matched_pairings = []
+for i in range(paired_matrix.shape[0]):
+    for j in range(paired_matrix.shape[1]):
+        if paired_matrix[i][j] == hungarian.Hungarian.STAR:
+            matched_pairing = pairings[repr(guild_members[i]) + repr(heelers[j])]
+            matched_pairings.append(matched_pairing)
 
+print(matched_pairings)
 
-
-
-
-
-        
+schedule_pairings.schedule(matched_pairings)
 
 
 
