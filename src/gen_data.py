@@ -1,4 +1,5 @@
 import random
+import math
 import string
 import numpy
 from collections import defaultdict
@@ -39,6 +40,8 @@ for line in fd:
     
     count += 1
 
+fd.close()
+
 # divide counts by total number of people
 calc_stats = {}
 calc_num_times_per_day = {}
@@ -51,26 +54,17 @@ for d in days_of_week:
 
     day = {}
     for t in time_slots:
-        time_npy_arr = numpy.array(stats[d][t])
-
-        time_std_dev = numpy.std(time_npy_arr, ddof=1)
-        time_mean = numpy.mean(time_npy_arr)
-
-        day[t] = (time_mean, time_std_dev) 
+        day[t] = sum(stats[d][t]) / float(len(stats[d][t])) 
 
     calc_stats[d] = day
 
-print(num_times_per_day)
-print(calc_num_times_per_day)
-print(stats)
-print(calc_stats)
-
 # use results to generate sample heelers 
-with open('heelers.tsv', 'a') as heeler_file:
+with open('heelers.tsv', 'w') as heeler_file:
     heeler_file.write("blah blah blah first line\r\n")
 
     # represents freshman, sophomore, graduate/professional student
-    possible_years = [1, 2, 5]
+    possible_years = [1, 2, 5, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2]
+    year_to_class = {1: 'Freshman', 2: 'Sophomore', 5: 'Grad/Prof'}
 
     for x in range(50):
         name_len = random.randint(3, 10)
@@ -81,19 +75,18 @@ with open('heelers.tsv', 'a') as heeler_file:
 
         # musical experience ranked from 1 to 10
         # assumes that everyone has a decent amount of musical experience
-        musical_exp = random.gauss(7, 2)
+        musical_exp = int(random.gauss(7, 2))
         if musical_exp > 10:
             musical_exp = 10
         musical_exp = str(musical_exp)
 
-        year = random.choice(possible_years)
+        year = year_to_class[random.choice(possible_years)]
 
         line = "2016-05-06\t%s\t%s\t%s\t%s" % (name, netid, musical_exp, year)
 
         for d in days_of_week:
             times = []
 
-            # -2, +2 for variability
             n_times_avail_this_day = random.gauss(calc_num_times_per_day[d][0],
                                                   calc_num_times_per_day[d][1])
 
@@ -104,7 +97,7 @@ with open('heelers.tsv', 'a') as heeler_file:
             for t in t_s:
                 chance = random.random()
 
-                if chance <= random.gauss(calc_stats[d][t][0], calc_stats[d][t][1]) and n_times_avail_this_day > 0:
+                if chance <= random.gauss(calc_stats[d][t], math.sqrt(calc_stats[d][t] * (1 - calc_stats[d][t]))) and n_times_avail_this_day > 0:
                     n_times_avail_this_day -= 1
                     times.append(t)
 

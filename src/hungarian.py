@@ -24,6 +24,7 @@ class Hungarian(object):
 
     def run(self):
 
+        print(self.matrix)
         # subtract least element of every row and column
         min_costs = numpy.amin(self.matrix, axis=1)
         min_costs = min_costs[None].transpose()
@@ -31,13 +32,15 @@ class Hungarian(object):
         min_costs = numpy.amin(self.matrix, axis=0)
         self.matrix = self.matrix - min_costs
 
+
         for i in range(self.nrows):
             for j in range(self.ncols):
-                if self.matrix[i][j] == 0 and not self._is_starred(i, j):
+                if self.matrix[i][j] == 0 and not self.cols_covered[j]:
                     self.marked[i][j] = self.STAR 
                     self.cols_covered[j] = True
 
-                    # break because this row has been covered already
+                    # other zeros in this row will have this starred zero in
+                    # its row, so skip the rest of this row
                     break
 
         self.state = 1 
@@ -50,25 +53,8 @@ class Hungarian(object):
             else:
                 ret_val = states[self.state]()
 
+        print(self.marked)
         return self.marked
-
-    def _is_starred(self, i, j):
-        if self.marked[i][j] == self.STAR:
-            return True
-        else:
-            return False
-
-    def _is_covered(self, i, j):
-        if self.rows_covered[i] or self.cols_covered[j]:
-            return True
-        else:
-            return False
-
-    def _star_in_row(self, i):
-        for j in range(self.ncols):
-            if self._is_starred(i,j):
-                return j
-        return -1
 
     def _step1(self):
 
@@ -96,14 +82,18 @@ class Hungarian(object):
         path.append((i,j))
         path_ended = False
 
+        print(self.matrix)
         while not path_ended:
             # This may not exist
+            print(path)
+            print(self.marked)
             i = self._get_star_in_col(i, j)
             if i == -1:
                 path_ended = True
                 break
             path.append((i,j))
-
+            
+            print(self.marked)
             j = self._get_prime_in_row(i, j)
             path.append((i,j))
 
@@ -136,10 +126,26 @@ class Hungarian(object):
 
         self.state = 1
 
+    def _is_starred(self, i, j):
+        if self.marked[i][j] == self.STAR:
+            return True
+        else:
+            return False
+
+    def _is_covered(self, i, j):
+        if self.rows_covered[i] or self.cols_covered[j]:
+            return True
+        else:
+            return False
+
+    def _star_in_row(self, i):
+        for j in range(self.ncols):
+            if self._is_starred(i,j):
+                return j
+        return -1
 
     def _get_smallest(self):
         min_so_far = 1000000
-
         for i in range(self.nrows):
             for j in range(self.ncols):
                 if not self._is_covered(i,j) and self.matrix[i][j] < min_so_far:
@@ -172,17 +178,16 @@ class Hungarian(object):
         else:
             print("impossible")
 
-    def _get_prime_in_row(self, i, col_of_prime):
+    def _get_prime_in_row(self, i, col_of_star):
         for j in range(self.ncols):
-            if self.marked[i][j] == self.PRIME and col_of_prime != j:
+            if self.marked[i][j] == self.PRIME and col_of_star != j:
                 return j
-
         print("This should never happen")
         return -1
 
-    def _get_star_in_col(self, row_of_star, j):
+    def _get_star_in_col(self, row_of_prime, j):
         for i in range(self.nrows):
-            if self.marked[i][j] == self.STAR and row_of_star != i:
+            if self.marked[i][j] == self.STAR and row_of_prime != i:
                 return i
         return -1
 

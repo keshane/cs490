@@ -78,6 +78,9 @@ class Pairing(object):
         if not has_matching_time:
             cost += 1000
 
+        if self.teacher.year <= self.heeler.year:
+            cost += 500
+
         return cost
     
 
@@ -125,10 +128,14 @@ def read_names(file_name, group, are_heelers=False):
         name = attributes[1]
         netid = attributes[2]
 
+        musical_exp = 0
+
         if are_heelers:
             musical_exp = int(attributes[3])
+            year = years[attributes[4]]
             i = 5
         else:
+            year = years[attributes[3]]
             i = 4
 
         # for real data
@@ -172,8 +179,6 @@ def create_pairings(teachers, heelers):
 
 
 def create_matrix(pairings, teachers, heelers):
-    assert len(teachers) < len(heelers)
-
     num_teachers = len(teachers)
 
     teacher_index_map = {}
@@ -200,21 +205,31 @@ heelers = []
 guildies_file = sys.argv[1]
 heelers_file = sys.argv[2]
 read_names(guildies_file, guild_members)
-read_names(heelers_file, heelers)
+read_names(heelers_file, heelers, are_heelers=True)
+
+for g in guild_members:
+    print(g)
+    print_availability(g.availability)
+for h in heelers:
+    print(h)
+    print_availability(h.availability)
+
+heelers.sort(key= lambda x: x.musical_exp)
 
 pairings = create_pairings(guild_members, heelers)
 
-matrix = create_matrix(pairings, guild_members, heelers)
+while heelers:
+    matrix = create_matrix(pairings, guild_members, heelers)
 
-hun = hungarian.Hungarian(matrix)
-paired_matrix = hun.run()
+    hun = hungarian.Hungarian(matrix)
+    paired_matrix = hun.run()
 
-matched_pairings = []
-for i in range(paired_matrix.shape[0]):
-    for j in range(paired_matrix.shape[1]):
-        if paired_matrix[i][j] == hungarian.Hungarian.STAR:
-            matched_pairing = pairings[repr(guild_members[i]) + repr(heelers[j])]
-            matched_pairings.append(matched_pairing)
+    matched_pairings = []
+    for i in range(paired_matrix.shape[0]):
+        for j in range(paired_matrix.shape[1]):
+            if paired_matrix[i][j] == hungarian.Hungarian.STAR:
+                matched_pairing = pairings[repr(guild_members[i]) + repr(heelers[j])]
+                matched_pairings.append(matched_pairing)
 
 print(matched_pairings)
 
