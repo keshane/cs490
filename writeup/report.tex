@@ -28,7 +28,7 @@ must be satisfied:
     \item {[H]} Because there is only one practice instrument available, only one lesson may be taking place at a time.
     \item {[S]} Each lesson is 30 minutes long and are assigned to half-hour slots between 8:00 AM and 12:00 AM. For various
         reasons, some of these slots may have to be made unavailable for lessons.
-    \item {[H]} Students must be taught by teachers at least one college class year higher. For example, freshman may be
+    \item {[S]} Students must be taught by teachers at least one college class year higher. For example, freshman may be
         taught by a sophomore, junior, or senior, but a sophomore can only be taught by a junior or senior. For the
         cases when a graduate or professional school student is taking lessons, a Guild member also in the graduate or
         professional schools should teach the student. The Guild may not have such a member, so a college senior may
@@ -80,9 +80,15 @@ need not be removed from the set of pairs if it does not end up being scheduled 
 more chances for it. In addition, all lessons last the same time, so finding the one with the earliest finishing time is
 unnecessary. A straightforward comparison of the start time is sufficient, but if we wanted to be exact, the pairs could
 be sorted on their finishing/start time \textit{and} the number of other available times they have (as a tie breaker).
-This would help sure the pairs that have fewer available times are allowed to be scheduled as soon as possible.\\
+This would help sure the pairs that have fewer available times are allowed to be scheduled as soon as possible.
 
-While the aforementioned problems form the core of the program, their implementations are not. There are many subtle and
+\subsection{Shift Scheduling}
+This problem also has qualities reminiscent of the shift scheduling problem, where workers must be assigned to shifts. This
+current case is easier since all lesson slots do not need to be filled. Shift scheduling is NP-hard, so it is
+usually solved through heuristics in combination with other techniques. This paper will present some of my own heuristics
+that I used for this project.\\
+
+While the assignemnt problem and interval scheduling form the core of the program, their implementations are not. There are many subtle and
 not-so-subtle wrinkles that have been (and still need to be) solved.
 
 \section{Implementation}
@@ -151,7 +157,7 @@ relationships, so this situation merits a high cost.
 To emphasize, these numbers do not have any statistical basis, but they did work well on the
 tests. 
 
-\subsection{Matching}
+\subsection{Assignment}
 In \texttt{hungarian.py}, the Hungarian algorithm is implemented as the class \texttt{Hungarian}. It closely follows the outline discussed by Munkres.
 The steps closely resemble a finite state machine, possibly looping several times as the edges of the bipartite graph
 are ``pruned'' before satisfying the exit condition. The Hungarian algorithm always finds the same assignment for the
@@ -181,6 +187,7 @@ experience, and a Heeler with little to no experience. Since the order of the Gu
 are shuffled within their partition to ensure that one Guildie is not biased to consistently receive a Heeler with less
 than or greater experience than the other Guildies receive. This shuffling takes advantage of the quirk of reordering
 inputs mentioned earler in this section.
+
 
 \subsection{Scheduling}
 After Guildies and Heelers are assigned to one another, they must be scheduled. \texttt{scheduler.py} contains the
@@ -220,6 +227,25 @@ brute\_force()}).
 If even the pseudo brute force does not work, the program returns the schedule that it has so far and notes the Heelers
 that could not be scheduled.
 
+\section{Future Work and Improvements}
+There is a robustness check that can be added after the assignment phase. If a cost matrix has many high cost
+pairings, one of these pairings might be included in the output of the Hungarian algorithm. Even though it would be a
+valid pairing according to the cost minimization requirements, it could violate one of the hard constraints. After the
+Hungarian returns the pairings it found, the receiver should check whether any of the pairings has too high of a cost.
+If the cost is indeed too high, the Heeler in that pairing should be moved to another partition or to the end of the
+list so that it has a better chance of being paired with a low-cost Guildie the next time. 
+
+Another improvement is to make the program user-friendly, e.g. allowing the user to specify the times that
+lessons can be held or changing the importance of various constraints. Being able to change more variable of the program
+will allow it to be more flexible to meet the needs of the end-user. 
+
+Currently, the code assumes a generous amount of memory is allocated for its use and does not worry too much about
+performance (since it can process the test data in less than a second). For large datasets, the current implementation
+of my data structures may become a problem, but they can be improved. Availabilities can be implemented as bitmaps.
+Trees could access the pairing with the earliest finishing time much faster. However, at this moment, scaling is not as
+important as ensuring the results are correct and the user can easily use the program.
+
+
 
 
 
@@ -240,6 +266,8 @@ creating this. Thank you Professor Aspnes for starting me on the right track on 
         ``Algorithms for the Assignment and Transportation Problems,''
         \emph{Journal of the Society for Industrial and Applied Mathematics},
         vol. 5, no. 1, pp. 32 - 38, Mar. 1975.
+        \bibitem{census}
+
 \end{thebibliography}
 
 \end{document}

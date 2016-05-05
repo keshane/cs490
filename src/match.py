@@ -272,8 +272,6 @@ def match_teachers_heelers(guildies, heelers, pairings):
                         break
                     matched_pairing = pairings[repr(guildies[i]) + repr(heelers_subset[j])]
                     matched_pairings.append(matched_pairing)
-                    if matched_pairing.cost > 230:
-                        print("high cost pairing: " + str(matched_pairing))
 
         low = high 
 

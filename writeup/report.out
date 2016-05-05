@@ -2,9 +2,11 @@
 \BOOKMARK [1][-]{section.2}{Background}{}% 2
 \BOOKMARK [2][-]{subsection.2.1}{Assignment Problem}{section.2}% 3
 \BOOKMARK [2][-]{subsection.2.2}{Interval Scheduling}{section.2}% 4
-\BOOKMARK [1][-]{section.3}{Implementation}{}% 5
-\BOOKMARK [2][-]{subsection.3.1}{Generating Data}{section.3}% 6
-\BOOKMARK [2][-]{subsection.3.2}{Person and Pairing Classes}{section.3}% 7
-\BOOKMARK [2][-]{subsection.3.3}{Matching}{section.3}% 8
-\BOOKMARK [2][-]{subsection.3.4}{Scheduling}{section.3}% 9
-\BOOKMARK [2][-]{subsection.3.5}{Handling Failures}{section.3}% 10
+\BOOKMARK [2][-]{subsection.2.3}{Shift Scheduling}{section.2}% 5
+\BOOKMARK [1][-]{section.3}{Implementation}{}% 6
+\BOOKMARK [2][-]{subsection.3.1}{Generating Data}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.2}{Person and Pairing Classes}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.3}{Assignment}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.4}{Scheduling}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.5}{Handling Failures}{section.3}% 11
+\BOOKMARK [1][-]{section.4}{Future Work and Improvements}{}% 12
