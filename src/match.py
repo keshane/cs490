@@ -7,6 +7,7 @@ from collections import defaultdict
 from hungarian import Hungarian
 import scheduler
 from days_and_times import *
+from forbidden_pairings import forbidden
 
 def print_availability(a):
     for d in days_of_week:
@@ -81,9 +82,14 @@ class Pairing(object):
         if not has_matching_time:
             cost += 1000
 
+        if (self.teacher.netid, self.heeler.netid) in forbidden:
+            cost += 1000
+
         if self.teacher.year <= self.heeler.year and self.teacher.year < 4:
             cost += 500
         elif self.teacher.year == 5 and self.heeler.year == 5:
+            # reduce cost of graduate students teaching fellow grad students
+            # so this will be more likely
             if cost - 100 > 0:
                 cost -= 100
             else:

@@ -1,0 +1,50 @@
+%        File: report.tex
+%     Created: Thu May 05 04:00 AM 2016 E
+% Last Change: Thu May 05 04:00 AM 2016 E
+%
+\documentclass[letterpaper]{article}
+\author{Keshane Gan\\
+        Advisor: James Aspnes\\
+        CPSC 490\\
+        Department of Computer Science\\
+        Yale University}
+\date{May 5, 2016}
+\title{Assigning and Scheduling Teachers and Students}
+\begin{document}
+\maketitle
+\section{Introduction and Motivation}
+Every school year, the Yale University Guild of Carillonneurs recruit new members to join their group to play a musical
+instrument called the carillon. During this process, each member of the Guild teaches several students individually how to play the
+carillon (through a process they call Heel) before those students audition for membership. These lessons are scheduled
+once a week over nine weeks. Since the founding of the Guild, the responsibility of scheduling these lessons lay in the
+hands of one Guild member. 
+
+The popularity of the Guild has made this responsibility more time consuming and stressful. Several hours are usually
+spent with one or two additional helpers trying to schedule teachers and students. Several hard [H] and soft [S] constraints
+must be satisfied:
+\begin{itemize}
+    \item {[H]} Both the teacher and the student have to be available for the lesson time.
+    \item {[H]} Because there is only one practice instrument available, only one lesson may be taking place at a time.
+    \item {[S]} Each lesson is 30 minutes long and are assigned to half-hour slots between 8:00 AM and 12:00 AM. For various
+        reasons, some of these slots may have to be made unavailable for lessons.
+    \item {[H]} Students must be taught by teachers at least one college class year higher. For example, freshman may be
+        taught by a sophomore, junior, or senior, but a sophomore can only be taught by a junior or senior. For the
+        cases when a graduate or professional school student is taking lessons, a Guild member also in the graduate or
+        professional schools should teach the student. The Guild may not have such a member, so a college senior may
+        also be the teacher.
+    \item {[H]} Students must not be taught by a Guild member whom he or she personally knows.
+    \item {[S]} Teachers should be given students with a variety of musical experiences.
+    \item {[S]} All teachers should have roughly the same number of students.
+\end{itemize}
+
+A couple of other important considerations is that the number of members in the Guild has historically been between 15
+and 20 and the number of students in Heel has been between 50 and 100. Automating the scheduling process would allow the
+responsible Guild members to focus their energy and efforts on other important aspects of coordinating Heel. I aim to
+provide them that automation. Note: for brevity and clarity, members of the Guild who act as the teachers will be referred to
+as \textit{Guildies} and the students who are taking lessons to learn carillon will be called \textit{Heelers}.
+
+\section{Background}
+
+\end{document}
+
+
