@@ -59,19 +59,19 @@ for d in days_of_week:
     calc_stats[d] = day
 
 # use results to generate sample heelers 
-with open('heelers.tsv', 'w') as heeler_file:
+with open('heelers.tsv', 'w') as heeler_file, open("names/dist.all.last", 'r') as last_file,\
+     open("names/dist.all.first", 'r') as first_file:
+    num_heelers = 100
     heeler_file.write("blah blah blah first line\r\n")
 
     # represents freshman, sophomore, graduate/professional student
     possible_years = [1, 2, 5, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2]
     year_to_class = {1: 'Freshman', 2: 'Sophomore', 5: 'Grad/Prof'}
 
-    for x in range(50):
-        name_len = random.randint(3, 10)
-        netid_len = random.randint(2, 3)
-        name = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase) for _ in range(name_len))
-        netid = ''.join(random.choice(string.ascii_lowercase) for _ in range(netid_len))
-        netid = netid + ''.join(random.choice(string.digits) for _ in range(netid_len))
+    for x in range(num_heelers):
+        name = first_file.readline().split(" ")[0] + " " + last_file.readline().split(" ")[0]
+        netid = name.split(" ")[0][0] + name.split(" ")[1][0]
+        netid = netid + ''.join(random.choice(string.digits) for _ in range(2))
 
         # musical experience ranked from 1 to 10
         # assumes that everyone has a decent amount of musical experience

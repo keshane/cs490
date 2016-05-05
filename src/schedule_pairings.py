@@ -5,7 +5,7 @@ def print_availability(a):
     for d in days_of_week:
         print(d)
         for t in time_slots:
-            if not a[d][t] == None:
+            if t in a[d]:
                 print(t + ": " + repr(a[d][t]))
 
         print("")
@@ -13,18 +13,23 @@ def print_availability(a):
 
 def schedule(pairings):
     final_schedule = {}
+    lessons_per_day = len(pairings) / len(days_of_week)
     for d in days_of_week:
+        lessons_today = lessons_per_day
         final_schedule[d] = {}
         for t in time_slots:
-            final_schedule[d][t] = None
+            if lessons_today == 0:
+                break
 
             for p in pairings:
                 if p.is_available_at(d, t):
+                    lessons_today -= 1
                     pairings.remove(p)
                     final_schedule[d][t] = p
                     break
 
     print_availability(final_schedule)
+    return final_schedule
 
 
 

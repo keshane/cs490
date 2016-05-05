@@ -27,7 +27,7 @@ class Person(object):
     """
 
     def __repr__(self):
-        person = "Person: %s, %s" % (self.name, self.netid)
+        person = "%s, %s" % (self.name, self.netid)
         return person
 
     def __str__(self):
@@ -78,8 +78,15 @@ class Pairing(object):
         if not has_matching_time:
             cost += 1000
 
-        if self.teacher.year <= self.heeler.year:
+        if self.teacher.year <= self.heeler.year and self.teacher.year < 4:
             cost += 500
+        elif self.teacher.year == 5 and self.heeler.year == 5:
+            if cost - 100 > 0:
+                cost -= 100
+            else:
+                cost = 0
+        elif self.teacher.year <= self.heeler.year and self.teacher.year == 4:
+            cost += 20
 
         return cost
     
@@ -217,13 +224,6 @@ heelers_file = sys.argv[2]
 read_names(guildies_file, guild_members)
 read_names(heelers_file, heelers, are_heelers=True)
 
-#for g in guild_members:
-#    print(g)
-#    print_availability(g.availability)
-#for h in heelers:
-#    print(h)
-#    print_availability(h.availability)
-
 heelers.sort(key= lambda x: x.musical_exp)
 
 pairings = create_pairings(guild_members, heelers)
@@ -231,7 +231,6 @@ pairings = create_pairings(guild_members, heelers)
 low = 0
 matched_pairings = []
 c = 1
-print("len of heelers:" + str(len(heelers)))
 while low < len(heelers):
     print(c)
     c += 1
@@ -253,9 +252,22 @@ while low < len(heelers):
     low = high 
     print(low)
 
-print(matched_pairings)
 
-schedule_pairings.schedule(matched_pairings)
+print("MISTAKES\n-----------------")
+for mp in matched_pairings:
+    if mp.cost > len(time_slots) * len(days_of_week):
+        print(mp)
+        print(mp.cost)
+        print(repr(mp.heeler))
 
+print("------------------------")
+print(pairings["David Hergoendreras, dhr234" + "JOSE COOK, JC84"].cost)
 
+schedule_pairings.schedule(matched_pairings[:])
+
+for t in guild_members:
+    print("{} {}".format(t, t.year))
+    for p in matched_pairings:
+        if p.teacher == t:
+            print("\t{}: {}, {}".format(p.heeler, p.heeler.musical_exp, p.heeler.year))
 
