@@ -335,11 +335,14 @@ heelers = read_names(heelers_file, are_heelers=True)
 pairings = create_pairings(guildies, heelers)
 
 matched_pairings = match_teachers_heelers(guildies, heelers, pairings)
+
+
 leftover_pairings = []
 final_schedule = {}
+
+
 schedule_success = scheduler.schedule(final_schedule, matched_pairings[:], leftover_pairings)
 
-scheduler.print_availability(final_schedule)
 
 # The scheduler wasn't able to assign all matched_pairings to a time
 if not schedule_success:
@@ -365,8 +368,9 @@ if not schedule_success:
             break
 
     # do something
-scheduler.print_availability(final_schedule)
 
+# The rest of the code pretty prints everything
+scheduler.print_availability(final_schedule)
 
 count = 0
 teachers_students_map = defaultdict(list) 

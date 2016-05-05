@@ -3,6 +3,7 @@
 % Last Change: Thu May 05 04:00 AM 2016 E
 %
 \documentclass[letterpaper]{article}
+\usepackage{hyperref}
 \author{Keshane Gan\\
         Advisor: James Aspnes\\
         CPSC 490\\
@@ -43,7 +44,76 @@ responsible Guild members to focus their energy and efforts on other important a
 provide them that automation. Note: for brevity and clarity, members of the Guild who act as the teachers will be referred to
 as \textit{Guildies} and the students who are taking lessons to learn carillon will be called \textit{Heelers}.
 
-\section{Background}
+\section{Background} 
+The nature of this problem resembles several others that are widely known in the optimization field, namely the assignment
+problem and the interval scheduling problem.
+
+\subsection{Assignemnt Problem}
+In the assignment problem, $p$ people must be assigned to $j$ jobs (for now assume $p = j$). There is a specific cost for
+each person performing a specific job. The goal is to assign people to these jobs so that the total cost of those jobs
+is minimized. 
+
+In \cite{munkres}, Munkres presents an algorithm to find this minimum cost. In his discussion, he represents all the
+costs in a matrix. This matrix in turn can be represented as a complete bipartite graph. Each element in the matrix can
+be discussed as the weight of an edge between a vertex in the set of rows $P$ and a vertex in the set of columns $J$.
+The goal is to turn this bipartite graph into a perfect matching between the two sets of vertices. Using a matrix makes
+this algorithm easier for computation. For a matrix, the goal is thus to essentially find an independent set of 0s
+(created by simple subtraction operations) in the matrix. This can be completed in $O(n^3)$ time, which is much faster
+than the na{\"i}ve $O(n!)$ solution (where $n$ is either the people or the jobs).
+
+In the current problem, figuring out the cost of a Guildie having a particular Heeler is not straightforward. Some of
+our constraints cannot be represented solely in a one-dimensional cost. In addition, there are many more Heelers than
+Guildies. The solution presented by Munkres cannot handle this many-to-one mapping.
+
+\subsection{Interval Scheduling}
+Interval scheduling seeks to assign the most tasks in a given time frame, with the parameters that the tasks can be
+arbitrary lengths and the constraint that no more than one task may run at one time.
+
+A greedy algorithm provides the solution to this problem. On each iteration, the task that will finish earliest should
+be assigned. All other tasks whose intervals intersect the assigned task must be discarded. 
+
+As opposed to the assignment problem, the interval scheduling problem is easier in the current case. Assuming we already
+have Guildie-Heeler pairs, each of those pairs will likely have multiple times that it is available together. Thus, a pair
+need not be removed from the set of pairs if it does not end up being scheduled in an interation since there will be
+more chances for it. In addition, all lessons last the same time, so finding the one with the earliest finishing time is
+unnecessary. A straightforward comparison of the start time is sufficient.\\
+
+While the aforementioned problems form the core of the program, their implementations are not. There are many subtle and
+not-so-subtle wrinkles that have been (and still need to be) solved.
+
+\section{Implementation}
+In this section, I will give a broad overview of my implementation and the reasons behind my decisions. The program was
+written in Python 2.7 with \texttt{print} functions imported in from the future. The comments in the source code are
+mostly helpful in explaining the details.
+
+\subsection{Generating Data}
+To gather data, I used Google Forms. The service provides a convenient way of viewing the data and exporting it into a
+tab-separated file. The link to the form is
+\href{https://docs.google.com/a/yale.edu/forms/d/1dGMb0QIPz002zcYsh-v1KmuDlbSm6i8hd1kqZ29O0LI/viewform?c=0&w=1}{here}.
+
+Unfortunately, I was not able to collect enough data to use as test data for my program. I \textit{was} able to collect
+information from 13 current Yale students. I treated these students as the Guildies and extrapolated their data to
+generate a set of fake Heelers.
+
+
+
+\section*{Acknowledgements}
+I would like to thank Darien Lee and Alex Carillo for their support and company on my all-nighters. I would also like to
+thank Megan Brink for her encouraging words. Special thanks goes to Christopher Shriver for the idea and motivation for
+creating this. Thank you Professor Aspnes for starting me on the right track on this project.
+
+
+
+
+
+
+\begin{thebibliography}{11}
+    \bibitem{munkres}
+       J. Munkres,
+        ``Algorithms for the Assignment and Transportation Problems,''
+        \emph{Journal of the Society for Industrial and Applied Mathematics},
+        vol. 5, no. 1, pp. 32 - 38, Mar. 1975.
+\end{thebibliography}
 
 \end{document}
 
