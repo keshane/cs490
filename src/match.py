@@ -229,7 +229,7 @@ def create_matrix(pairings, teachers, heelers):
 
     return mat
 
-def match_teachers_heelers(guildies, heelers, pairings, shake=False):
+def match_teachers_heelers(guildies, heelers, pairings):
     """
     Matching Guildies and Heelers using the Hungarian algorithm.
 
@@ -237,7 +237,6 @@ def match_teachers_heelers(guildies, heelers, pairings, shake=False):
         guildies: list of Guildies
         heelers: list of Heelers
         pairings: list of Pairing objects that are all combinations of guildies and heelers
-        shake: indicates that the order of heelers should be shuffled
 
     returns a list of pairings that have been matched by the Hungarian algorithm
     """
@@ -254,13 +253,15 @@ def match_teachers_heelers(guildies, heelers, pairings, shake=False):
         heelers_subset = heelers[low:high]
         # if we have failed scheduling, try shuffling the order of the
         # heelers to try to obtain a different set of matched pairings
-        if shake:
-            random.shuffle(heelers_subset)
+        random.shuffle(heelers_subset)
 
         # creates the cost matrix
         matrix = create_matrix(pairings, guildies, heelers_subset)
 
-        hun = Hungarian(matrix)
+        if len(heelers_subset) < len(guildies):
+            hun = Hungarian(matrix, real_ncols=len(heelers_subset))
+        else:
+            hun = Hungarian(matrix)
         paired_matrix = hun.run()
 
         # go through result matrix and extract the pairings that it indicates
@@ -331,7 +332,7 @@ heelers_file = sys.argv[2]
 guildies = read_names(guildies_file)
 heelers = read_names(heelers_file, are_heelers=True)
 
-
+# pairings is a dictionary that keepss track of all the pairings
 pairings = create_pairings(guildies, heelers)
 
 matched_pairings = match_teachers_heelers(guildies, heelers, pairings)
@@ -352,7 +353,7 @@ if not schedule_success:
         leftover_heelers = [x.heeler for x in leftover_pairings]
         leftover_pairings = []
         # Redo assignments for the Heelers left without a lesson time
-        rematched_pairings = match_teachers_heelers(guildies, leftover_heelers, pairings, shake=True)
+        rematched_pairings = match_teachers_heelers(guildies, leftover_heelers, pairings)
         schedule_success = scheduler.reschedule(final_schedule, rematched_pairings[:], leftover_pairings)
         attempts += 1
         if attempts > 10:

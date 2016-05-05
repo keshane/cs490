@@ -1,5 +1,6 @@
 from __future__ import print_function
 from days_and_times import *
+import random
 
 def print_availability(a):
     for d in days_of_week:
@@ -39,7 +40,11 @@ def schedule(final_schedule, pairings, leftovers):
         # and the lessons_today deleted
         lessons_today = lessons_per_day + 2
         final_schedule[d] = {}
-        for t in time_slots:
+
+        # reduce bias for early in the morning
+        t_s = time_slots[:]
+        random.shuffle(t_s)
+        for t in t_s:
             if lessons_today == 0:
                 break
 
@@ -50,7 +55,7 @@ def schedule(final_schedule, pairings, leftovers):
                     final_schedule[d][t] = p
                     break
     if pairings:
-        print("not all were scheduled")
+        print("reschedule")
         leftovers.extend(pairings[:])
         return False
     else:
@@ -78,8 +83,8 @@ def reschedule(failed_schedule, pairings, leftovers):
                     break
 
     if pairings:
-        print("not all were scheduled")
-        leftover.extend(pairings[:])
+        print("reschedule")
+        leftovers.extend(pairings[:])
         return False 
     else:
         return True 

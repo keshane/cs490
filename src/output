@@ -1,342 +1,230 @@
-not all were scheduled
+reschedule
+high cost pairing: Pairing(Teacher: Joy, Heeler: KENNETH SCOTT)
 Sunday
-8:00: Pairing(Teacher: Lynnli, Heeler: SUSAN HARRIS)
-8:30: Pairing(Teacher: Joy, Heeler: JOHN JONES)
-9:00: Pairing(Teacher: sonia, Heeler: JAMES JOHNSON)
-9:30: Pairing(Teacher: Scroogey McScrooge, Heeler: CHARLES MARTIN)
-10:00: Pairing(Teacher: Jonathan Adler, Heeler: SHIRLEY MORRIS)
-10:30: Pairing(Teacher: Wiglaf, Heeler: CHRISTINE POWELL)
-11:00: Pairing(Teacher: Joy, Heeler: ANTHONY TURNER)
-11:30: Pairing(Teacher: Megera, Heeler: MARIA JACKSON)
-12:00: Pairing(Teacher: Meg, Heeler: DENNIS ROSS)
-13:30: Pairing(Teacher: Ag Sor, Heeler: ROBERT DAVIS)
-14:00: Pairing(Teacher: Sam Antha, Heeler: NANCY LEWIS)
-14:30: Pairing(Teacher: Joy, Heeler: MARY SMITH)
-15:00: Pairing(Teacher: sonia, Heeler: PETER LONG)
-15:30: Pairing(Teacher: David Hergoendreras, Heeler: KAREN WALKER)
-16:00: Pairing(Teacher: Meg Gan, Heeler: REBECCA TORRES)
-16:30: Pairing(Teacher: Scroogey McScrooge, Heeler: STEVEN ADAMS)
+15:00: Pairing(Teacher: Sam Antha, Heeler: NANCY LEWIS)
+15:30: Pairing(Teacher: Scroogey McScrooge, Heeler: ROBERT DAVIS)
+16:00: Pairing(Teacher: Meg Gan, Heeler: SHIRLEY MORRIS)
+16:30: Pairing(Teacher: Spongebob, Heeler: CHARLES MARTIN)
+17:00: Pairing(Teacher: sonia, Heeler: BETTY ALLEN)
+17:30: Pairing(Teacher: sonia, Heeler: JASON EVANS)
+18:00: Pairing(Teacher: David Hergoendreras, Heeler: KAREN WALKER)
+18:30: Pairing(Teacher: Joy, Heeler: ANTHONY TURNER)
+19:00: Pairing(Teacher: Megera, Heeler: REBECCA TORRES)
+19:30: Pairing(Teacher: Wiglaf, Heeler: CHRISTINE POWELL)
+20:00: Pairing(Teacher: Scroogey McScrooge, Heeler: STEVEN ADAMS)
+20:30: Pairing(Teacher: Meg, Heeler: DENNIS ROSS)
+21:00: Pairing(Teacher: Jonathan Adler, Heeler: MARIA JACKSON)
+21:30: Pairing(Teacher: Joy, Heeler: JOHN JONES)
+22:00: Pairing(Teacher: Ag Sor, Heeler: JAMES JOHNSON)
+22:30: Pairing(Teacher: Lynnli, Heeler: DONNA HILL)
 
 Monday
-8:00: Pairing(Teacher: David Hergoendreras, Heeler: DANIEL LEE)
-8:30: Pairing(Teacher: Meg, Heeler: JENNIFER ANDERSON)
-9:00: Pairing(Teacher: Megera, Heeler: MARK YOUNG)
-9:30: Pairing(Teacher: Sam Antha, Heeler: RONALD PEREZ)
-10:00: Pairing(Teacher: sonia, Heeler: LINDA BROWN)
-10:30: Pairing(Teacher: sonia, Heeler: AMANDA BARNES)
-11:00: Pairing(Teacher: Meg, Heeler: MATTHEW COLLINS)
-11:30: Pairing(Teacher: Meg Gan, Heeler: DOROTHY MARTINEZ)
-12:00: Pairing(Teacher: Meg Gan, Heeler: BETTY ALLEN)
-13:30: Pairing(Teacher: Wiglaf, Heeler: DONNA HILL)
-14:00: Pairing(Teacher: Wiglaf, Heeler: BRENDA RIVERA)
-14:30: Pairing(Teacher: Scroogey McScrooge, Heeler: GARY SANCHEZ)
-15:00: Pairing(Teacher: Meg Gan, Heeler: FRANCES FOSTER)
-15:30: Pairing(Teacher: Joy, Heeler: CYNTHIA REED)
-16:00: Pairing(Teacher: David Hergoendreras, Heeler: TIMOTHY ROGERS)
-16:30: Pairing(Teacher: David Hergoendreras, Heeler: KENNETH SCOTT)
+15:00: Pairing(Teacher: Wiglaf, Heeler: FRANCES FOSTER)
+15:30: Pairing(Teacher: Sam Antha, Heeler: JENNIFER ANDERSON)
+16:00: Pairing(Teacher: Joy, Heeler: CAROLYN JENKINS)
+16:30: Pairing(Teacher: David Hergoendreras, Heeler: DANIEL LEE)
+17:00: Pairing(Teacher: sonia, Heeler: BRENDA RIVERA)
+17:30: Pairing(Teacher: Megera, Heeler: MARK YOUNG)
+18:00: Pairing(Teacher: Jonathan Adler, Heeler: ELIZABETH MOORE)
+18:30: Pairing(Teacher: Lynnli, Heeler: WILLIAM TAYLOR)
+19:00: Pairing(Teacher: Lynnli, Heeler: SUSAN HARRIS)
+19:30: Pairing(Teacher: Wiglaf, Heeler: RONALD PEREZ)
+20:00: Pairing(Teacher: Meg, Heeler: SANDRA WRIGHT)
+20:30: Pairing(Teacher: Jonathan Adler, Heeler: ARTHUR ALEXANDER)
+21:00: Pairing(Teacher: Scroogey McScrooge, Heeler: LINDA BROWN)
+21:30: Pairing(Teacher: Meg Gan, Heeler: KIMBERLY PARKER)
+22:00: Pairing(Teacher: Ag Sor, Heeler: PETER LONG)
+22:30: Pairing(Teacher: Spongebob, Heeler: RICHARD WHITE)
 
 Tuesday
-8:00: Pairing(Teacher: Jonathan Adler, Heeler: JOSEPH GARCIA)
-8:30: Pairing(Teacher: Meg, Heeler: RAYMOND WATSON)
-9:00: Pairing(Teacher: Ag Sor, Heeler: ELIZABETH MOORE)
-9:30: Pairing(Teacher: Lynnli, Heeler: SANDRA WRIGHT)
-10:00: Pairing(Teacher: Ag Sor, Heeler: ANN BRYANT)
-10:30: Pairing(Teacher: Lynnli, Heeler: ANGELA MORGAN)
-11:00: Pairing(Teacher: Scroogey McScrooge, Heeler: DOUGLAS WASHINGTON)
-13:30: Pairing(Teacher: Megera, Heeler: THOMAS ROBINSON)
-14:00: Pairing(Teacher: Megera, Heeler: MARTHA SANDERS)
-14:30: Pairing(Teacher: Megera, Heeler: JANET FLORES)
-15:00: Pairing(Teacher: Meg, Heeler: WALTER COLEMAN)
-15:30: Pairing(Teacher: Joy, Heeler: BRIAN CARTER)
-16:00: Pairing(Teacher: Spongebob, Heeler: JASON EVANS)
-16:30: Pairing(Teacher: Spongebob, Heeler: RICHARD WHITE)
-17:00: Pairing(Teacher: Spongebob, Heeler: VIRGINIA GRAY)
-17:30: Pairing(Teacher: Ag Sor, Heeler: LARRY BELL)
+15:00: Pairing(Teacher: Megera, Heeler: JANET FLORES)
+15:30: Pairing(Teacher: Megera, Heeler: MARTHA SANDERS)
+16:00: Pairing(Teacher: Joy, Heeler: EDWARD GONZALEZ)
+16:30: Pairing(Teacher: Spongebob, Heeler: LAURA ROBERTS)
+17:00: Pairing(Teacher: sonia, Heeler: PATRICIA WILLIAMS)
+17:30: Pairing(Teacher: Ag Sor, Heeler: ANN BRYANT)
+18:00: Pairing(Teacher: Meg, Heeler: LISA CLARK)
+18:30: Pairing(Teacher: sonia, Heeler: WALTER COLEMAN)
+19:00: Pairing(Teacher: sonia, Heeler: PAMELA BROOKS)
+19:30: Pairing(Teacher: Spongebob, Heeler: LARRY BELL)
+20:00: Pairing(Teacher: Spongebob, Heeler: RAYMOND WATSON)
+20:30: Pairing(Teacher: Wiglaf, Heeler: SARAH PHILLIPS)
+21:00: Pairing(Teacher: Joy, Heeler: CYNTHIA REED)
+21:30: Pairing(Teacher: Ag Sor, Heeler: MARY SMITH)
+22:00: Pairing(Teacher: Sam Antha, Heeler: JERRY WOOD)
+22:30: Pairing(Teacher: Scroogey McScrooge, Heeler: AMANDA BARNES)
 
 Wednesday
-8:00: Pairing(Teacher: Jonathan Adler, Heeler: KIMBERLY PARKER)
-8:30: Pairing(Teacher: Sam Antha, Heeler: DONALD KING)
-9:00: Pairing(Teacher: Joy, Heeler: HAROLD HUGHES)
-9:30: Pairing(Teacher: Megera, Heeler: CAROL GREEN)
-10:00: Pairing(Teacher: Joy, Heeler: SHARON NELSON)
-10:30: Pairing(Teacher: Jonathan Adler, Heeler: KATHLEEN JAMES)
-11:00: Pairing(Teacher: sonia, Heeler: FRANK COOPER)
-11:30: Pairing(Teacher: sonia, Heeler: MELISSA MURPHY)
-12:00: Pairing(Teacher: Meg, Heeler: DIANE DIAZ)
-13:30: Pairing(Teacher: Scroogey McScrooge, Heeler: ARTHUR ALEXANDER)
-14:00: Pairing(Teacher: Wiglaf, Heeler: SARAH PHILLIPS)
-14:30: Pairing(Teacher: Meg, Heeler: LISA CLARK)
-15:00: Pairing(Teacher: Scroogey McScrooge, Heeler: ANNA HOWARD)
-15:30: Pairing(Teacher: Sam Antha, Heeler: JERRY WOOD)
-16:00: Pairing(Teacher: Jonathan Adler, Heeler: PATRICIA WILLIAMS)
-16:30: Pairing(Teacher: Sam Antha, Heeler: EDWARD GONZALEZ)
+15:00: Pairing(Teacher: Meg, Heeler: ANNA HOWARD)
+15:30: Pairing(Teacher: Sam Antha, Heeler: HAROLD HUGHES)
+16:00: Pairing(Teacher: Meg Gan, Heeler: MARIE PATTERSON)
+16:30: Pairing(Teacher: Meg Gan, Heeler: JOSEPH GARCIA)
+17:00: Pairing(Teacher: Megera, Heeler: DOROTHY MARTINEZ)
+17:30: Pairing(Teacher: Scroogey McScrooge, Heeler: KATHLEEN JAMES)
+18:00: Pairing(Teacher: Wiglaf, Heeler: AMY RICHARDSON)
+18:30: Pairing(Teacher: Sam Antha, Heeler: SHARON NELSON)
+19:00: Pairing(Teacher: Spongebob, Heeler: JESSICA STEWART)
+19:30: Pairing(Teacher: Meg, Heeler: GARY SANCHEZ)
+20:00: Pairing(Teacher: Lynnli, Heeler: MELISSA MURPHY)
+20:30: Pairing(Teacher: Meg Gan, Heeler: DEBORAH EDWARDS)
+21:00: Pairing(Teacher: Lynnli, Heeler: CAROL GREEN)
+21:30: Pairing(Teacher: Sam Antha, Heeler: DONALD KING)
+22:00: Pairing(Teacher: Ag Sor, Heeler: JEFFREY BAILEY)
+22:30: Pairing(Teacher: Jonathan Adler, Heeler: CHRISTOPHER RODRIGUEZ)
 
 Thursday
-8:00: Pairing(Teacher: Scroogey McScrooge, Heeler: JOSHUA PRICE)
-8:30: Pairing(Teacher: Wiglaf, Heeler: LAURA ROBERTS)
-9:00: Pairing(Teacher: Wiglaf, Heeler: MARIE PATTERSON)
-9:30: Pairing(Teacher: Sam Antha, Heeler: ANDREW RAMIREZ)
-10:00: Pairing(Teacher: Meg, Heeler: PAMELA BROOKS)
-10:30: Pairing(Teacher: Jonathan Adler, Heeler: STEPHANIE HENDERSON)
-11:00: Pairing(Teacher: David Hergoendreras, Heeler: RYAN GRIFFIN)
-11:30: Pairing(Teacher: Lynnli, Heeler: CARL GONZALES)
-12:00: Pairing(Teacher: Lynnli, Heeler: CHRISTOPHER RODRIGUEZ)
-13:30: Pairing(Teacher: Meg Gan, Heeler: MICHELLE MITCHELL)
-14:00: Pairing(Teacher: Lynnli, Heeler: WILLIAM TAYLOR)
-14:30: Pairing(Teacher: David Hergoendreras, Heeler: JOSE COOK)
 15:00: Pairing(Teacher: David Hergoendreras, Heeler: PATRICK PERRY)
-15:30: Pairing(Teacher: Megera, Heeler: MICHAEL WILSON)
-16:00: Pairing(Teacher: Spongebob, Heeler: CAROLYN JENKINS)
-16:30: Pairing(Teacher: Spongebob, Heeler: DEBORAH EDWARDS)
+15:30: Pairing(Teacher: Megera, Heeler: THOMAS ROBINSON)
+16:00: Pairing(Teacher: Jonathan Adler, Heeler: MATTHEW COLLINS)
+16:30: Pairing(Teacher: Joy, Heeler: ANDREW RAMIREZ)
+17:00: Pairing(Teacher: Jonathan Adler, Heeler: STEPHANIE HENDERSON)
+17:30: Pairing(Teacher: Jonathan Adler, Heeler: VIRGINIA GRAY)
+18:00: Pairing(Teacher: Scroogey McScrooge, Heeler: JOSHUA PRICE)
+18:30: Pairing(Teacher: David Hergoendreras, Heeler: JOSE COOK)
+19:00: Pairing(Teacher: David Hergoendreras, Heeler: RYAN GRIFFIN)
+19:30: Pairing(Teacher: Joy, Heeler: RUTH BAKER)
+20:00: Pairing(Teacher: sonia, Heeler: DOUGLAS WASHINGTON)
+20:30: Pairing(Teacher: Wiglaf, Heeler: ANGELA MORGAN)
+21:00: Pairing(Teacher: Wiglaf, Heeler: CATHERINE BUTLER)
+21:30: Pairing(Teacher: Meg, Heeler: GEORGE LOPEZ)
+22:00: Pairing(Teacher: Meg, Heeler: KEVIN CAMPBELL)
+22:30: Pairing(Teacher: David Hergoendreras, Heeler: TIMOTHY ROGERS)
 
 Friday
-8:00: Pairing(Teacher: Meg Gan, Heeler: CATHERINE BUTLER)
-8:30: Pairing(Teacher: Wiglaf, Heeler: HELEN HERNANDEZ)
-9:00: Pairing(Teacher: Sam Antha, Heeler: KEVIN CAMPBELL)
-9:30: Pairing(Teacher: Sam Antha, Heeler: JOYCE RUSSELL)
-10:30: Pairing(Teacher: Jonathan Adler, Heeler: MARGARET THOMPSON)
-11:00: Pairing(Teacher: Joy, Heeler: HENRY SIMMONS)
-11:30: Pairing(Teacher: Scroogey McScrooge, Heeler: GREGORY KELLY)
-12:00: Pairing(Teacher: Megera, Heeler: SCOTT COX)
-14:00: Pairing(Teacher: Ag Sor, Heeler: PAUL HALL)
-14:30: Pairing(Teacher: Ag Sor, Heeler: ERIC WARD)
-15:00: Pairing(Teacher: Lynnli, Heeler: ROGER HAYES)
-15:30: Pairing(Teacher: Ag Sor, Heeler: JEFFREY BAILEY)
-16:00: Pairing(Teacher: sonia, Heeler: GEORGE LOPEZ)
-16:30: Pairing(Teacher: David Hergoendreras, Heeler: RUTH BAKER)
-17:00: Pairing(Teacher: Spongebob, Heeler: JESSICA STEWART)
-17:30: Pairing(Teacher: Spongebob, Heeler: DAVID THOMAS)
+15:00: Pairing(Teacher: Lynnli, Heeler: SCOTT COX)
+15:30: Pairing(Teacher: Ag Sor, Heeler: ERIC WARD)
+16:00: Pairing(Teacher: Meg Gan, Heeler: ROGER HAYES)
+16:30: Pairing(Teacher: Wiglaf, Heeler: GREGORY KELLY)
+17:00: Pairing(Teacher: Ag Sor, Heeler: PAUL HALL)
+17:30: Pairing(Teacher: Spongebob, Heeler: FRANK COOPER)
+18:00: Pairing(Teacher: Scroogey McScrooge, Heeler: HELEN HERNANDEZ)
+18:30: Pairing(Teacher: Lynnli, Heeler: DAVID THOMAS)
+19:00: Pairing(Teacher: Lynnli, Heeler: CARL GONZALES)
+19:30: Pairing(Teacher: Sam Antha, Heeler: HENRY SIMMONS)
+20:00: Pairing(Teacher: Megera, Heeler: MICHAEL WILSON)
+20:30: Pairing(Teacher: sonia, Heeler: STEPHEN PETERSON)
+21:00: Pairing(Teacher: Joy, Heeler: JOYCE RUSSELL)
+21:30: Pairing(Teacher: Joy, Heeler: KENNETH SCOTT)
+22:00: Pairing(Teacher: Meg Gan, Heeler: MICHELLE MITCHELL)
 
 Saturday
-8:00: Pairing(Teacher: Wiglaf, Heeler: BARBARA MILLER)
-14:30: Pairing(Teacher: Spongebob, Heeler: DEBRA BENNETT)
-15:00: Pairing(Teacher: sonia, Heeler: STEPHEN PETERSON)
-
-Sunday
-8:00: Pairing(Teacher: Lynnli, Heeler: SUSAN HARRIS)
-8:30: Pairing(Teacher: Joy, Heeler: JOHN JONES)
-9:00: Pairing(Teacher: sonia, Heeler: JAMES JOHNSON)
-9:30: Pairing(Teacher: Scroogey McScrooge, Heeler: CHARLES MARTIN)
-10:00: Pairing(Teacher: Jonathan Adler, Heeler: SHIRLEY MORRIS)
-10:30: Pairing(Teacher: Wiglaf, Heeler: CHRISTINE POWELL)
-11:00: Pairing(Teacher: Joy, Heeler: ANTHONY TURNER)
-11:30: Pairing(Teacher: Megera, Heeler: MARIA JACKSON)
-12:00: Pairing(Teacher: Meg, Heeler: DENNIS ROSS)
-13:30: Pairing(Teacher: Ag Sor, Heeler: ROBERT DAVIS)
-14:00: Pairing(Teacher: Sam Antha, Heeler: NANCY LEWIS)
-14:30: Pairing(Teacher: Joy, Heeler: MARY SMITH)
-15:00: Pairing(Teacher: sonia, Heeler: PETER LONG)
-15:30: Pairing(Teacher: David Hergoendreras, Heeler: KAREN WALKER)
-16:00: Pairing(Teacher: Meg Gan, Heeler: REBECCA TORRES)
-16:30: Pairing(Teacher: Scroogey McScrooge, Heeler: STEVEN ADAMS)
-17:30: Pairing(Teacher: Meg, Heeler: AMY RICHARDSON)
-
-Monday
-8:00: Pairing(Teacher: David Hergoendreras, Heeler: DANIEL LEE)
-8:30: Pairing(Teacher: Meg, Heeler: JENNIFER ANDERSON)
-9:00: Pairing(Teacher: Megera, Heeler: MARK YOUNG)
-9:30: Pairing(Teacher: Sam Antha, Heeler: RONALD PEREZ)
-10:00: Pairing(Teacher: sonia, Heeler: LINDA BROWN)
-10:30: Pairing(Teacher: sonia, Heeler: AMANDA BARNES)
-11:00: Pairing(Teacher: Meg, Heeler: MATTHEW COLLINS)
-11:30: Pairing(Teacher: Meg Gan, Heeler: DOROTHY MARTINEZ)
-12:00: Pairing(Teacher: Meg Gan, Heeler: BETTY ALLEN)
-13:30: Pairing(Teacher: Wiglaf, Heeler: DONNA HILL)
-14:00: Pairing(Teacher: Wiglaf, Heeler: BRENDA RIVERA)
-14:30: Pairing(Teacher: Scroogey McScrooge, Heeler: GARY SANCHEZ)
-15:00: Pairing(Teacher: Meg Gan, Heeler: FRANCES FOSTER)
-15:30: Pairing(Teacher: Joy, Heeler: CYNTHIA REED)
-16:00: Pairing(Teacher: David Hergoendreras, Heeler: TIMOTHY ROGERS)
-16:30: Pairing(Teacher: David Hergoendreras, Heeler: KENNETH SCOTT)
-
-Tuesday
-8:00: Pairing(Teacher: Jonathan Adler, Heeler: JOSEPH GARCIA)
-8:30: Pairing(Teacher: Meg, Heeler: RAYMOND WATSON)
-9:00: Pairing(Teacher: Ag Sor, Heeler: ELIZABETH MOORE)
-9:30: Pairing(Teacher: Lynnli, Heeler: SANDRA WRIGHT)
-10:00: Pairing(Teacher: Ag Sor, Heeler: ANN BRYANT)
-10:30: Pairing(Teacher: Lynnli, Heeler: ANGELA MORGAN)
-11:00: Pairing(Teacher: Scroogey McScrooge, Heeler: DOUGLAS WASHINGTON)
-13:30: Pairing(Teacher: Megera, Heeler: THOMAS ROBINSON)
-14:00: Pairing(Teacher: Megera, Heeler: MARTHA SANDERS)
-14:30: Pairing(Teacher: Megera, Heeler: JANET FLORES)
-15:00: Pairing(Teacher: Meg, Heeler: WALTER COLEMAN)
-15:30: Pairing(Teacher: Joy, Heeler: BRIAN CARTER)
-16:00: Pairing(Teacher: Spongebob, Heeler: JASON EVANS)
-16:30: Pairing(Teacher: Spongebob, Heeler: RICHARD WHITE)
-17:00: Pairing(Teacher: Spongebob, Heeler: VIRGINIA GRAY)
-17:30: Pairing(Teacher: Ag Sor, Heeler: LARRY BELL)
-
-Wednesday
-8:00: Pairing(Teacher: Jonathan Adler, Heeler: KIMBERLY PARKER)
-8:30: Pairing(Teacher: Sam Antha, Heeler: DONALD KING)
-9:00: Pairing(Teacher: Joy, Heeler: HAROLD HUGHES)
-9:30: Pairing(Teacher: Megera, Heeler: CAROL GREEN)
-10:00: Pairing(Teacher: Joy, Heeler: SHARON NELSON)
-10:30: Pairing(Teacher: Jonathan Adler, Heeler: KATHLEEN JAMES)
-11:00: Pairing(Teacher: sonia, Heeler: FRANK COOPER)
-11:30: Pairing(Teacher: sonia, Heeler: MELISSA MURPHY)
-12:00: Pairing(Teacher: Meg, Heeler: DIANE DIAZ)
-13:30: Pairing(Teacher: Scroogey McScrooge, Heeler: ARTHUR ALEXANDER)
-14:00: Pairing(Teacher: Wiglaf, Heeler: SARAH PHILLIPS)
-14:30: Pairing(Teacher: Meg, Heeler: LISA CLARK)
-15:00: Pairing(Teacher: Scroogey McScrooge, Heeler: ANNA HOWARD)
-15:30: Pairing(Teacher: Sam Antha, Heeler: JERRY WOOD)
-16:00: Pairing(Teacher: Jonathan Adler, Heeler: PATRICIA WILLIAMS)
-16:30: Pairing(Teacher: Sam Antha, Heeler: EDWARD GONZALEZ)
-
-Thursday
-8:00: Pairing(Teacher: Scroogey McScrooge, Heeler: JOSHUA PRICE)
-8:30: Pairing(Teacher: Wiglaf, Heeler: LAURA ROBERTS)
-9:00: Pairing(Teacher: Wiglaf, Heeler: MARIE PATTERSON)
-9:30: Pairing(Teacher: Sam Antha, Heeler: ANDREW RAMIREZ)
-10:00: Pairing(Teacher: Meg, Heeler: PAMELA BROOKS)
-10:30: Pairing(Teacher: Jonathan Adler, Heeler: STEPHANIE HENDERSON)
-11:00: Pairing(Teacher: David Hergoendreras, Heeler: RYAN GRIFFIN)
-11:30: Pairing(Teacher: Lynnli, Heeler: CARL GONZALES)
-12:00: Pairing(Teacher: Lynnli, Heeler: CHRISTOPHER RODRIGUEZ)
-13:30: Pairing(Teacher: Meg Gan, Heeler: MICHELLE MITCHELL)
-14:00: Pairing(Teacher: Lynnli, Heeler: WILLIAM TAYLOR)
-14:30: Pairing(Teacher: David Hergoendreras, Heeler: JOSE COOK)
-15:00: Pairing(Teacher: David Hergoendreras, Heeler: PATRICK PERRY)
-15:30: Pairing(Teacher: Megera, Heeler: MICHAEL WILSON)
-16:00: Pairing(Teacher: Spongebob, Heeler: CAROLYN JENKINS)
-16:30: Pairing(Teacher: Spongebob, Heeler: DEBORAH EDWARDS)
-
-Friday
-8:00: Pairing(Teacher: Meg Gan, Heeler: CATHERINE BUTLER)
-8:30: Pairing(Teacher: Wiglaf, Heeler: HELEN HERNANDEZ)
-9:00: Pairing(Teacher: Sam Antha, Heeler: KEVIN CAMPBELL)
-9:30: Pairing(Teacher: Sam Antha, Heeler: JOYCE RUSSELL)
-10:30: Pairing(Teacher: Jonathan Adler, Heeler: MARGARET THOMPSON)
-11:00: Pairing(Teacher: Joy, Heeler: HENRY SIMMONS)
-11:30: Pairing(Teacher: Scroogey McScrooge, Heeler: GREGORY KELLY)
-12:00: Pairing(Teacher: Megera, Heeler: SCOTT COX)
-14:00: Pairing(Teacher: Ag Sor, Heeler: PAUL HALL)
-14:30: Pairing(Teacher: Ag Sor, Heeler: ERIC WARD)
-15:00: Pairing(Teacher: Lynnli, Heeler: ROGER HAYES)
-15:30: Pairing(Teacher: Ag Sor, Heeler: JEFFREY BAILEY)
-16:00: Pairing(Teacher: sonia, Heeler: GEORGE LOPEZ)
-16:30: Pairing(Teacher: David Hergoendreras, Heeler: RUTH BAKER)
-17:00: Pairing(Teacher: Spongebob, Heeler: JESSICA STEWART)
-17:30: Pairing(Teacher: Spongebob, Heeler: DAVID THOMAS)
-
-Saturday
-8:00: Pairing(Teacher: Wiglaf, Heeler: BARBARA MILLER)
-14:30: Pairing(Teacher: Spongebob, Heeler: DEBRA BENNETT)
-15:00: Pairing(Teacher: sonia, Heeler: STEPHEN PETERSON)
+15:30: Pairing(Teacher: Meg, Heeler: DIANE DIAZ)
+16:00: Pairing(Teacher: David Hergoendreras, Heeler: BARBARA MILLER)
+17:00: Pairing(Teacher: David Hergoendreras, Heeler: MARGARET THOMPSON)
+18:30: Pairing(Teacher: Sam Antha, Heeler: BRIAN CARTER)
+21:00: Pairing(Teacher: Spongebob, Heeler: DEBRA BENNETT)
 
 100
-Spongebob 3
-	JASON EVANS: 3, 2
-	RICHARD WHITE: 5, 1
-	VIRGINIA GRAY: 7, 2
-	CAROLYN JENKINS: 5, 1
-	DEBORAH EDWARDS: 6, 2
-	JESSICA STEWART: 8, 2
-	DAVID THOMAS: 9, 2
-	DEBRA BENNETT: 9, 2
-Joy 2
-	JOHN JONES: 4, 1
-	ANTHONY TURNER: 5, 1
-	MARY SMITH: 6, 1
-	CYNTHIA REED: 6, 1
-	BRIAN CARTER: 9, 1
-	HAROLD HUGHES: 8, 1
-	SHARON NELSON: 7, 1
-	HENRY SIMMONS: 10, 1
-sonia 3
-	JAMES JOHNSON: 3, 1
-	PETER LONG: 4, 1
-	LINDA BROWN: 6, 2
-	AMANDA BARNES: 6, 1
-	FRANK COOPER: 9, 2
-	MELISSA MURPHY: 7, 2
-	GEORGE LOPEZ: 8, 2
-	STEPHEN PETERSON: 9, 2
-Megera 4
-	MARIA JACKSON: 3, 2
-	MARK YOUNG: 5, 2
-	THOMAS ROBINSON: 8, 1
-	MARTHA SANDERS: 7, 2
-	JANET FLORES: 5, 2
-	CAROL GREEN: 6, 2
-	MICHAEL WILSON: 9, 1
-	SCOTT COX: 9, 2
-Ag Sor 2
-	ROBERT DAVIS: 4, 1
-	ELIZABETH MOORE: 5, 1
-	ANN BRYANT: 6, 1
-	LARRY BELL: 5, 1
-	PAUL HALL: 9, 1
-	ERIC WARD: 8, 1
-	JEFFREY BAILEY: 7, 1
 Jonathan Adler 3
-	SHIRLEY MORRIS: 3, 2
-	JOSEPH GARCIA: 5, 2
-	KIMBERLY PARKER: 5, 2
-	KATHLEEN JAMES: 7, 2
-	PATRICIA WILLIAMS: 7, 2
+	MARIA JACKSON: 3, 2
+	ELIZABETH MOORE: 5, 1
+	ARTHUR ALEXANDER: 5, 1
+	CHRISTOPHER RODRIGUEZ: 7, 2
+	MATTHEW COLLINS: 9, 1
 	STEPHANIE HENDERSON: 8, 1
-	MARGARET THOMPSON: 9, 1
-Meg Gan 3
-	REBECCA TORRES: 4, 2
-	DOROTHY MARTINEZ: 7, 1
-	BETTY ALLEN: 5, 2
-	FRANCES FOSTER: 5, 2
-	MICHELLE MITCHELL: 7, 2
-	CATHERINE BUTLER: 8, 2
+	VIRGINIA GRAY: 7, 2
 Wiglaf 4
 	CHRISTINE POWELL: 4, 2
-	DONNA HILL: 5, 2
-	BRENDA RIVERA: 5, 1
+	FRANCES FOSTER: 5, 2
+	RONALD PEREZ: 5, 1
 	SARAH PHILLIPS: 6, 1
-	LAURA ROBERTS: 7, 2
-	MARIE PATTERSON: 7, 2
-	HELEN HERNANDEZ: 9, 1
-	BARBARA MILLER: 10, 5
-Scroogey McScrooge 4
-	CHARLES MARTIN: 1, 2
-	STEVEN ADAMS: 5, 1
-	GARY SANCHEZ: 6, 1
-	DOUGLAS WASHINGTON: 8, 2
-	ARTHUR ALEXANDER: 5, 1
-	ANNA HOWARD: 7, 2
-	JOSHUA PRICE: 7, 2
+	AMY RICHARDSON: 8, 2
+	ANGELA MORGAN: 7, 2
+	CATHERINE BUTLER: 8, 2
 	GREGORY KELLY: 10, 2
+Meg 3
+	DENNIS ROSS: 4, 2
+	SANDRA WRIGHT: 5, 2
+	LISA CLARK: 6, 2
+	ANNA HOWARD: 7, 2
+	GARY SANCHEZ: 6, 1
+	GEORGE LOPEZ: 8, 2
+	KEVIN CAMPBELL: 9, 1
+	DIANE DIAZ: 9, 1
+Scroogey McScrooge 4
+	ROBERT DAVIS: 4, 1
+	STEVEN ADAMS: 5, 1
+	LINDA BROWN: 6, 2
+	AMANDA BARNES: 6, 1
+	KATHLEEN JAMES: 7, 2
+	JOSHUA PRICE: 7, 2
+	HELEN HERNANDEZ: 9, 1
+Spongebob 3
+	CHARLES MARTIN: 1, 2
+	RICHARD WHITE: 5, 1
+	LAURA ROBERTS: 7, 2
+	LARRY BELL: 5, 1
+	RAYMOND WATSON: 6, 2
+	JESSICA STEWART: 8, 2
+	FRANK COOPER: 9, 2
+	DEBRA BENNETT: 9, 2
+Ag Sor 2
+	JAMES JOHNSON: 3, 1
+	PETER LONG: 4, 1
+	ANN BRYANT: 6, 1
+	MARY SMITH: 6, 1
+	JEFFREY BAILEY: 7, 1
+	ERIC WARD: 8, 1
+	PAUL HALL: 9, 1
+Meg Gan 3
+	SHIRLEY MORRIS: 3, 2
+	KIMBERLY PARKER: 5, 2
+	MARIE PATTERSON: 7, 2
+	JOSEPH GARCIA: 5, 2
+	DEBORAH EDWARDS: 6, 2
+	ROGER HAYES: 8, 1
+	MICHELLE MITCHELL: 7, 2
+Lynnli 4
+	DONNA HILL: 5, 2
+	WILLIAM TAYLOR: 6, 1
+	SUSAN HARRIS: 4, 2
+	MELISSA MURPHY: 7, 2
+	CAROL GREEN: 6, 2
+	SCOTT COX: 9, 2
+	DAVID THOMAS: 9, 2
+	CARL GONZALES: 7, 2
+Joy 2
+	ANTHONY TURNER: 5, 1
+	JOHN JONES: 4, 1
+	CAROLYN JENKINS: 5, 1
+	EDWARD GONZALEZ: 7, 1
+	CYNTHIA REED: 6, 1
+	ANDREW RAMIREZ: 8, 1
+	RUTH BAKER: 9, 1
+	JOYCE RUSSELL: 9, 1
+	KENNETH SCOTT: 10, 5
+sonia 3
+	BETTY ALLEN: 5, 2
+	JASON EVANS: 3, 2
+	BRENDA RIVERA: 5, 1
+	PATRICIA WILLIAMS: 7, 2
+	WALTER COLEMAN: 8, 2
+	PAMELA BROOKS: 7, 2
+	DOUGLAS WASHINGTON: 8, 2
+	STEPHEN PETERSON: 9, 2
+Sam Antha 2
+	NANCY LEWIS: 4, 1
+	JENNIFER ANDERSON: 5, 1
+	JERRY WOOD: 5, 1
+	HAROLD HUGHES: 8, 1
+	SHARON NELSON: 7, 1
+	DONALD KING: 7, 1
+	HENRY SIMMONS: 10, 1
+	BRIAN CARTER: 9, 1
 David Hergoendreras 5
 	KAREN WALKER: 4, 5
 	DANIEL LEE: 5, 1
-	TIMOTHY ROGERS: 5, 1
-	KENNETH SCOTT: 10, 5
-	RYAN GRIFFIN: 6, 1
-	JOSE COOK: 7, 5
 	PATRICK PERRY: 7, 2
-	RUTH BAKER: 9, 1
-Lynnli 4
-	SUSAN HARRIS: 4, 2
-	SANDRA WRIGHT: 5, 2
-	ANGELA MORGAN: 7, 2
-	CARL GONZALES: 7, 2
-	CHRISTOPHER RODRIGUEZ: 7, 2
-	WILLIAM TAYLOR: 6, 1
-	ROGER HAYES: 8, 1
-Meg 3
-	DENNIS ROSS: 4, 2
-	AMY RICHARDSON: 8, 2
-	JENNIFER ANDERSON: 5, 1
-	MATTHEW COLLINS: 9, 1
-	RAYMOND WATSON: 6, 2
-	WALTER COLEMAN: 8, 2
-	DIANE DIAZ: 9, 1
-	LISA CLARK: 6, 2
-	PAMELA BROOKS: 7, 2
-Sam Antha 2
-	NANCY LEWIS: 4, 1
-	RONALD PEREZ: 5, 1
-	DONALD KING: 7, 1
-	JERRY WOOD: 5, 1
-	EDWARD GONZALEZ: 7, 1
-	ANDREW RAMIREZ: 8, 1
-	KEVIN CAMPBELL: 9, 1
-	JOYCE RUSSELL: 9, 1
+	JOSE COOK: 7, 5
+	RYAN GRIFFIN: 6, 1
+	TIMOTHY ROGERS: 5, 1
+	BARBARA MILLER: 10, 5
+	MARGARET THOMPSON: 9, 1
+Megera 4
+	REBECCA TORRES: 4, 2
+	MARK YOUNG: 5, 2
+	JANET FLORES: 5, 2
+	MARTHA SANDERS: 7, 2
+	DOROTHY MARTINEZ: 7, 1
+	THOMAS ROBINSON: 8, 1
+	MICHAEL WILSON: 9, 1
