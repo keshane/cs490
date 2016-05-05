@@ -227,6 +227,12 @@ brute\_force()}).
 If even the pseudo brute force does not work, the program returns the schedule that it has so far and notes the Heelers
 that could not be scheduled.
 
+
+\section{Results}
+In the source code, sample input data are in the \texttt{guildies.tsv} and \texttt{heelers.tsv} files.
+Sample output is in the file \texttt{output}. To run:\\
+
+\texttt{python match.py guildies.tsv heelers.tsv}
 \section{Future Work and Improvements}
 There is a robustness check that can be added after the assignment phase. If a cost matrix has many high cost
 pairings, one of these pairings might be included in the output of the Hungarian algorithm. Even though it would be a
@@ -251,6 +257,7 @@ important as ensuring the results are correct and the user can easily use the pr
 
 
 \section*{Acknowledgements}
+I appreciate all those who took the time to do my survey.
 I would like to thank Darien Lee and Alex Carillo for their support and company on my all-nighters. I would also like to
 thank Megan Brink for her encouraging words. Special thanks goes to Christopher Shriver for the idea and motivation for
 creating this. Thank you Professor Aspnes for starting me on the right track on this project.
@@ -267,6 +274,9 @@ creating this. Thank you Professor Aspnes for starting me on the right track on 
         \emph{Journal of the Society for Industrial and Applied Mathematics},
         vol. 5, no. 1, pp. 32 - 38, Mar. 1975.
         \bibitem{census}
+            United States Census Bureau,
+            \emph{Frequently Occurring Surnames from Census 1990 – Names Files}[Last names and male and female first names],
+            Retrieved from http://www.census.gov/topics/population/genealogy/data/1990\_census/1990\_census\_namefiles.html
 
 \end{thebibliography}
 
