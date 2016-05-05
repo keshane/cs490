@@ -179,18 +179,28 @@ def create_pairings(teachers, heelers):
 
 
 def create_matrix(pairings, teachers, heelers):
-    num_teachers = len(teachers)
+    if len(teachers) <= len(heelers):
+        num_teachers = len(teachers)
 
-    teacher_index_map = {}
-    heeler_index_map = {}
+        mat = numpy.zeros(shape=(num_teachers, num_teachers))
+        
+        for t in range(num_teachers):
+            for h in range(num_teachers):
+                mat[t][h] = pairings[repr(teachers[t]) + repr(heelers[h])].cost
 
-    mat = numpy.zeros(shape=(num_teachers, num_teachers))
-    
-    for t in range(num_teachers):
-        for h in range(num_teachers):
-            mat[t][h] = pairings[repr(teachers[t]) + repr(heelers[h])].cost
+        return mat
+    else:
+        mat = numpy.zeros(shape=(len(teachers), len(teachers)))
 
-    return mat
+        for t in range(len(teachers)):
+            for h in range(len(teachers)):
+                if h >= len(heelers):
+                    mat[t][h] = 0
+                else:
+                    mat[t][h] = pairings[repr(teachers[t]) + repr(heelers[h])].cost
+
+        return mat
+
 
 
 
@@ -207,29 +217,41 @@ heelers_file = sys.argv[2]
 read_names(guildies_file, guild_members)
 read_names(heelers_file, heelers, are_heelers=True)
 
-for g in guild_members:
-    print(g)
-    print_availability(g.availability)
-for h in heelers:
-    print(h)
-    print_availability(h.availability)
+#for g in guild_members:
+#    print(g)
+#    print_availability(g.availability)
+#for h in heelers:
+#    print(h)
+#    print_availability(h.availability)
 
 heelers.sort(key= lambda x: x.musical_exp)
 
 pairings = create_pairings(guild_members, heelers)
 
-while heelers:
-    matrix = create_matrix(pairings, guild_members, heelers)
+low = 0
+matched_pairings = []
+c = 1
+print("len of heelers:" + str(len(heelers)))
+while low < len(heelers):
+    print(c)
+    c += 1
+    high = min(low+len(guild_members), len(heelers))
+    heelers_subset = heelers[low:high]
+    matrix = create_matrix(pairings, guild_members, heelers_subset)
 
     hun = hungarian.Hungarian(matrix)
     paired_matrix = hun.run()
 
-    matched_pairings = []
     for i in range(paired_matrix.shape[0]):
         for j in range(paired_matrix.shape[1]):
             if paired_matrix[i][j] == hungarian.Hungarian.STAR:
-                matched_pairing = pairings[repr(guild_members[i]) + repr(heelers[j])]
+                if j >= len(heelers_subset):
+                    break
+                matched_pairing = pairings[repr(guild_members[i]) + repr(heelers_subset[j])]
                 matched_pairings.append(matched_pairing)
+
+    low = high 
+    print(low)
 
 print(matched_pairings)
 

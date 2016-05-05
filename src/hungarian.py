@@ -9,7 +9,7 @@ class Hungarian(object):
     STAR = 1
     PRIME = 2
 
-    def __init__(self, cost_matrix):
+    def __init__(self, cost_matrix, real_ncols=0):
         self.matrix = cost_matrix
         self.nrows = cost_matrix.shape[0]
         self.ncols = cost_matrix.shape[1]
@@ -22,15 +22,22 @@ class Hungarian(object):
         self.marked.fill(0)
         self.state = 0
 
+        # means the matrix has been padded
+        if not real_ncols == 0:
+            self.real_ncols = real_ncols
+        else:
+            self.real_ncols = self.ncols
+
     def run(self):
 
-        print(self.matrix)
+#       print(self.matrix)
         # subtract least element of every row and column
         min_costs = numpy.amin(self.matrix, axis=1)
         min_costs = min_costs[None].transpose()
         self.matrix = self.matrix - min_costs
         min_costs = numpy.amin(self.matrix, axis=0)
         self.matrix = self.matrix - min_costs
+#       print(self.matrix)
 
 
         for i in range(self.nrows):
@@ -53,7 +60,7 @@ class Hungarian(object):
             else:
                 ret_val = states[self.state]()
 
-        print(self.marked)
+#       print(self.marked)
         return self.marked
 
     def _step1(self):
@@ -82,18 +89,18 @@ class Hungarian(object):
         path.append((i,j))
         path_ended = False
 
-        print(self.matrix)
+#       print(self.matrix)
         while not path_ended:
             # This may not exist
-            print(path)
-            print(self.marked)
+#           print(path)
+#           print(self.marked)
             i = self._get_star_in_col(i, j)
             if i == -1:
                 path_ended = True
                 break
             path.append((i,j))
             
-            print(self.marked)
+#           print(self.marked)
             j = self._get_prime_in_row(i, j)
             path.append((i,j))
 
@@ -155,7 +162,7 @@ class Hungarian(object):
 
 
     def _all_cols_covered(self):
-        for j in range(self.ncols):
+        for j in range(self.real_ncols):
             if not self.cols_covered[j]:
                 return False
 
