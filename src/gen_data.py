@@ -1,3 +1,6 @@
+"""
+Generate Heelers based off a sample of schedules
+"""
 import random
 import math
 import string
@@ -11,6 +14,7 @@ fd.readline()
 
 # keeps track of number of students available at a given time slot
 stats = {}
+# keeps track of the number of times students are available on a given day
 num_times_per_day = {}
 
 for d in days_of_week:
@@ -64,7 +68,7 @@ with open('heelers.tsv', 'w') as heeler_file, open("names/dist.all.last", 'r') a
     num_heelers = 100
     heeler_file.write("blah blah blah first line\r\n")
 
-    # represents freshman, sophomore, graduate/professional student
+    # represents freshman, sophomore, graduate/professional student (graduate students are rare)
     possible_years = [1, 2, 5, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2]
     year_to_class = {1: 'Freshman', 2: 'Sophomore', 5: 'Grad/Prof'}
 

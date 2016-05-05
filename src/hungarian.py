@@ -4,7 +4,7 @@ class Hungarian(object):
     """
     Performs the Hungarian algorithm according to the Munkres paper
     
-    Complexity of O(n^3)
+    Complexity of O(n^4)
     """
     STAR = 1
     PRIME = 2
@@ -30,14 +30,12 @@ class Hungarian(object):
 
     def run(self):
 
-#       print(self.matrix)
         # subtract least element of every row and column
         min_costs = numpy.amin(self.matrix, axis=1)
         min_costs = min_costs[None].transpose()
         self.matrix = self.matrix - min_costs
         min_costs = numpy.amin(self.matrix, axis=0)
         self.matrix = self.matrix - min_costs
-#       print(self.matrix)
 
 
         for i in range(self.nrows):
@@ -54,6 +52,8 @@ class Hungarian(object):
 
         states = {1: self._step1, 2 : self._step2, 3: self._step3}
 
+        # Acts like a FSM. When a step wants to move to another state
+        # it changes the self.state variable to the next step
         while not self.state == 4:
             if self.state == 2:
                 states[self.state](*(ret_val))
@@ -64,7 +64,6 @@ class Hungarian(object):
         return self.marked
 
     def _step1(self):
-
         for i in range(self.nrows):
             for j in range(self.ncols):
                 if self.matrix[i][j] == 0 and not self._is_covered(i,j):
@@ -82,6 +81,7 @@ class Hungarian(object):
 
         self.state = 3
 
+    # This closely follows step 2 of the algorithm presented by Munkres
     def _step2(self, row, col):
         i = row
         j = col
@@ -89,26 +89,24 @@ class Hungarian(object):
         path.append((i,j))
         path_ended = False
 
-#       print(self.matrix)
+        # Find path of alternating primed zeros and starred zeros (if they exist)
         while not path_ended:
             # This may not exist
-#           print(path)
-#           print(self.marked)
             i = self._get_star_in_col(i, j)
             if i == -1:
                 path_ended = True
                 break
             path.append((i,j))
             
-#           print(self.marked)
             j = self._get_prime_in_row(i, j)
             path.append((i,j))
 
         for zero in path:
             self._toggle_zero_in_sequence(*zero)
 
-        self.rows_covered[:] = [False for _ in range(self.nrows)]
-        self.cols_covered[:] = [False for _ in range(self.ncols)]
+        # clear all covers
+        self.rows_covered = [False for _ in range(self.nrows)]
+        self.cols_covered = [False for _ in range(self.ncols)]
 
         self._cover_cols_of_stars()
 
@@ -133,6 +131,7 @@ class Hungarian(object):
 
         self.state = 1
 
+    # The rest of these functions are self explanatory
     def _is_starred(self, i, j):
         if self.marked[i][j] == self.STAR:
             return True

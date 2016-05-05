@@ -1,8 +1,11 @@
 from __future__ import print_function
 import numpy
 import sys
-import hungarian
-import schedule_pairings
+import random
+import itertools
+from collections import defaultdict
+from hungarian import Hungarian
+import scheduler
 from days_and_times import *
 
 def print_availability(a):
@@ -116,16 +119,18 @@ class Pairing(object):
 
 
 
-def read_names(file_name, group, are_heelers=False):
+def read_names(file_name, are_heelers=False):
     """
     Reads in a tab-separated file (TSV) with people's information and converts them to
     instances of the Person class.
 
     params
         file_name: name of the file as a string
-        group: an empty list in which the instances of Person should be put
+
+    returns a list of the Person instances created
     """
     fd = open(file_name, 'r')
+    group = []
 
     # skip first line (column names)
     fd.readline()
@@ -166,12 +171,20 @@ def read_names(file_name, group, are_heelers=False):
         person = Person(availability, name, netid, musical_exp=musical_exp, year=year)
         group.append(person)
 
+    return group
+
 
 def create_pairings(teachers, heelers):
     """
-    Calculate the cost of a teacher teaching a Heeler for each pair of teacher and Heeler
+    Create a collection of all possible combinations of (teacher, heeler).
 
-    len of teachers < len of heelers
+    params
+        teachers: list of guildies
+        heelers: list of heelers
+
+    returns a dictionary of Pairing objects that's accessed by the repr of
+    the teacher concatenated with the repr of the heeler.
+
     """
 
     # key is the concatenations of the repr of the teacher and student
@@ -186,88 +199,187 @@ def create_pairings(teachers, heelers):
 
 
 def create_matrix(pairings, teachers, heelers):
-    if len(teachers) <= len(heelers):
-        num_teachers = len(teachers)
+    """
+    Create a cost matrix
 
-        mat = numpy.zeros(shape=(num_teachers, num_teachers))
-        
-        for t in range(num_teachers):
-            for h in range(num_teachers):
+    params
+        pairings: list of Pairing objects that are all combinations of guildies and heelers
+        teachers: list of guildies
+        heelers: list of heelers
+
+    returns a cost matrix between the teachers and heelers with padded columns if
+    necessary
+    """
+    num_teachers = len(teachers)
+
+    mat = numpy.zeros(shape=(num_teachers, num_teachers))
+    
+    for t in range(num_teachers):
+        for h in range(num_teachers):
+            if h >= len(heelers):
+                mat[t][h] = 100000
+            else:
                 mat[t][h] = pairings[repr(teachers[t]) + repr(heelers[h])].cost
 
-        return mat
+    return mat
+
+def match_teachers_heelers(guildies, heelers, pairings, shake=False):
+    """
+    Matching Guildies and Heelers using the Hungarian algorithm.
+
+    params
+        guildies: list of Guildies
+        heelers: list of Heelers
+        pairings: list of Pairing objects that are all combinations of guildies and heelers
+        shake: indicates that the order of heelers should be shuffled
+
+    returns a list of pairings that have been matched by the Hungarian algorithm
+    """
+
+    low = 0
+    matched_pairings = []
+
+    # We sort heelers so that each teacher gets students with a range of
+    # musical experience. In each iteration, all the teachers get
+    # students with about the same musical experience.
+    heelers.sort(key= lambda x: x.musical_exp)
+    while low < len(heelers):
+        high = min(low+len(guildies), len(heelers))
+        heelers_subset = heelers[low:high]
+        # if we have failed scheduling, try shuffling the order of the
+        # heelers to try to obtain a different set of matched pairings
+        if shake:
+            random.shuffle(heelers_subset)
+
+        # creates the cost matrix
+        matrix = create_matrix(pairings, guildies, heelers_subset)
+
+        hun = Hungarian(matrix)
+        paired_matrix = hun.run()
+
+        # go through result matrix and extract the pairings that it indicates
+        for i in range(paired_matrix.shape[0]):
+            for j in range(paired_matrix.shape[1]):
+                if paired_matrix[i][j] == Hungarian.STAR:
+                    if j >= len(heelers_subset):
+                        break
+                    matched_pairing = pairings[repr(guildies[i]) + repr(heelers_subset[j])]
+                    matched_pairings.append(matched_pairing)
+                    if matched_pairing.cost > 230:
+                        print("high cost pairing: " + str(matched_pairing))
+
+        low = high 
+
+    return matched_pairings
+
+
+def brute_force(guildies, heelers, final_schedule):
+    """
+    Warning: Using this function is not recommended.
+    This goes through all possible combinations of guildies and heelers.
+    It takes forever.
+    
+    If x and y and lists and len(x) < len(y), this creates
+    (y choose x) * x! combinations
+    """
+    if len(guildies) <= len(heelers):
+        print('hi')
+        all_pairings = [zip(guildies, x) for x in itertools.permutations(heelers, len(guildies))]
+        print(all_pairings)
     else:
-        mat = numpy.zeros(shape=(len(teachers), len(teachers)))
+        print('hi')
+        all_pairings = [zip(x, heelers) for x in itertools.permutations(guildies, len(heelers))]
+        print(all_pairings)
 
-        for t in range(len(teachers)):
-            for h in range(len(teachers)):
-                if h >= len(heelers):
-                    mat[t][h] = 0
-                else:
-                    mat[t][h] = pairings[repr(teachers[t]) + repr(heelers[h])].cost
+    # DISCONTINUED BECAUSE THIS CRASHES MY COMPUTER
 
-        return mat
+def pseudo_brute_force(guildies, heelers, pairings, final_schedule):
+    """
+    This function is a greedy "brute force" way to assign
+    guildies and heelers to an existing schedule. It doesn't
+    examine all possible possibilities, though it could certainly
+    be made to do so by a calling function.
+    """
 
+    for d in days_of_week:
+        for t in time_slots:
+            # if this time slot is open
+            if not t in final_schedule[d]:
+                # assign first pair that works
+                for g in guildies:
+                    for h in heelers:
+                        p = pairings[repr(g) + repr(h)]
+                        if p.availabilities[d][t] == 1:
+                            if p.cost < 1000:
+                                final_schedule[d][t] = p
+                                heelers.remove(h)
 
 
 
     
 
 
-guild_members = []
-heelers = []
-# 
-# read_names('heelers.tsv', heelers)
-
 guildies_file = sys.argv[1]
 heelers_file = sys.argv[2]
-read_names(guildies_file, guild_members)
-read_names(heelers_file, heelers, are_heelers=True)
 
-heelers.sort(key= lambda x: x.musical_exp)
-
-pairings = create_pairings(guild_members, heelers)
-
-low = 0
-matched_pairings = []
-c = 1
-while low < len(heelers):
-    print(c)
-    c += 1
-    high = min(low+len(guild_members), len(heelers))
-    heelers_subset = heelers[low:high]
-    matrix = create_matrix(pairings, guild_members, heelers_subset)
-
-    hun = hungarian.Hungarian(matrix)
-    paired_matrix = hun.run()
-
-    for i in range(paired_matrix.shape[0]):
-        for j in range(paired_matrix.shape[1]):
-            if paired_matrix[i][j] == hungarian.Hungarian.STAR:
-                if j >= len(heelers_subset):
-                    break
-                matched_pairing = pairings[repr(guild_members[i]) + repr(heelers_subset[j])]
-                matched_pairings.append(matched_pairing)
-
-    low = high 
-    print(low)
+guildies = read_names(guildies_file)
+heelers = read_names(heelers_file, are_heelers=True)
 
 
-print("MISTAKES\n-----------------")
-for mp in matched_pairings:
-    if mp.cost > len(time_slots) * len(days_of_week):
-        print(mp)
-        print(mp.cost)
-        print(repr(mp.heeler))
+pairings = create_pairings(guildies, heelers)
 
-print("------------------------")
-print(pairings["David Hergoendreras, dhr234" + "JOSE COOK, JC84"].cost)
+matched_pairings = match_teachers_heelers(guildies, heelers, pairings)
+leftover_pairings = []
+final_schedule = {}
+schedule_success = scheduler.schedule(final_schedule, matched_pairings[:], leftover_pairings)
 
-schedule_pairings.schedule(matched_pairings[:])
+scheduler.print_availability(final_schedule)
 
-for t in guild_members:
+# The scheduler wasn't able to assign all matched_pairings to a time
+if not schedule_success:
+    # Only attempts to redo the assignment 11 times
+    attempts = 0 
+    while not schedule_success:
+        leftover_heelers = [x.heeler for x in leftover_pairings]
+        leftover_pairings = []
+        # Redo assignments for the Heelers left without a lesson time
+        rematched_pairings = match_teachers_heelers(guildies, leftover_heelers, pairings, shake=True)
+        schedule_success = scheduler.reschedule(final_schedule, rematched_pairings[:], leftover_pairings)
+        attempts += 1
+        if attempts > 10:
+            # try to stick Heelers wherever we can in the schedule
+            pseudo_brute_force(guildies, leftover_heelers, pairings, final_schedule)
+            if leftover_heelers:
+                # if we get to this point, it means that we would have to try at least a few different
+                # combinations of entire permutations of pairings. This would take too long
+                # (see the brute_force() function).
+                print("""The following Heelers could not be assigned. Finding somewhere to put him/her
+                        would take longer than you finding you a teacher to take him/her on.""")
+                print(leftover_heelers)
+            break
+
+    # do something
+scheduler.print_availability(final_schedule)
+
+
+count = 0
+teachers_students_map = defaultdict(list) 
+for d in days_of_week:
+    for t in time_slots:
+        if t in final_schedule[d]:
+            p = final_schedule[d][t]
+            teachers_students_map[p.teacher].append(p.heeler)
+            count += 1
+
+print(count)
+
+for t, l in teachers_students_map.items():
     print("{} {}".format(t, t.year))
-    for p in matched_pairings:
-        if p.teacher == t:
-            print("\t{}: {}, {}".format(p.heeler, p.heeler.musical_exp, p.heeler.year))
+    for h in l:
+        print("\t{}: {}, {}".format(h, h.musical_exp, h.year))
+#for t in guildies:
+#    print("{} {}".format(t, t.year))
+#    for p in matched_pairings:
+#        if p.teacher == t:
+#            print("\t{}: {}, {}".format(p.heeler, p.heeler.musical_exp, p.heeler.year))
 
