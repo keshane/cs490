@@ -46,62 +46,41 @@ class Pairing(object):
     This class represents a pairing between a guild member and a Heeler.
 
     Attributes:
-        heeler: get the Person instance that represents the Heeler
+        student: get the Person instance that represents the Heeler
         teacher: get the Person instance that represents the teacher
     """
 
     def __str__(self):
-        return "Pairing(Teacher: %s, Heeler: %s)" % (self.teacher, self.heeler)
+        return "Pairing(Teacher: %s, Heeler: %s)" % (self.teacher, self.student)
 
     def __repr__(self):
-        return "Pairing(Teacher: %s, Heeler: %s)" % (self.teacher, self.heeler)
-    def __init__(self, teacher, heeler):
+        return "Pairing(Teacher: %s, Heeler: %s)" % (self.teacher, self.student)
+    def __init__(self, teacher, student):
         self.teacher = teacher
-        self.heeler = heeler
-        self.availabilities = self.add_availabilities(teacher.availability, heeler.availability)
+        self.student = student
+        self.availabilities = self.add_availabilities(teacher.availability, student.availability)
 
-        # calculate cost should always come after add_availabilities()
         self.cost = self.calculate_cost()
 
 
     def calculate_cost(self):
         cost = 0
-        has_matching_time = False
-
-        for d in days_of_week:
-            for t in time_slots:
-                if self.availabilities[d][t] == 1:
-                    has_matching_time = True
-                else:
-                    cost += 1
-
-        if not has_matching_time:
-            cost += 1000
-
-        if (self.teacher.netid, self.heeler.netid) in forbidden:
-            cost += 1000
-
-        if self.teacher.year <= self.heeler.year and self.teacher.year < 4:
-            cost += 500
-        elif self.teacher.year == 5 and self.heeler.year == 5:
-            # reduce cost of graduate students teaching fellow grad students
-            # so this will be more likely
-            if cost - 100 > 0:
-                cost -= 100
-            else:
-                cost = 0
-        elif self.teacher.year <= self.heeler.year and self.teacher.year == 4:
-            cost += 20
+        # executes all the functions in cost_functions.py
+        for attribute in dir(cost_functions):
+            cost_function = getattr(cost_functions, attribute)
+            if callable(cost_function):
+                cost += cost_function(self.teacher, self.student)
 
         return cost
-    
 
-    def add_availabilities(self, teacher_availability, heeler_availability):
+
+
+    def add_availabilities(self, teacher_availability, student_availability):
         availabilities = {}
         for d in days_of_week:
             times = {} 
             for t in time_slots:
-                if teacher_availability[d][t] == 1 and heeler_availability[d][t] == 1:
+                if teacher_availability[d][t] == 1 and student_availability[d][t] == 1:
                     times[t] = 1
                 else:
                     times[t] = 0
@@ -121,7 +100,7 @@ class Pairing(object):
 
 
 
-def read_names(file_name, are_heelers=False):
+def read_names(file_name, are_students=False):
     """
     Reads in a tab-separated file (TSV) with people's information and converts them to
     instances of the Person class.
@@ -144,7 +123,7 @@ def read_names(file_name, are_heelers=False):
 
         musical_exp = 0
 
-        if are_heelers:
+        if are_students:
             musical_exp = int(attributes[3])
             year = years[attributes[4]]
             i = 5
@@ -176,16 +155,16 @@ def read_names(file_name, are_heelers=False):
     return group
 
 
-def create_pairings(teachers, heelers):
+def create_pairings(teachers, students):
     """
-    Create a collection of all possible combinations of (teacher, heeler).
+    Create a collection of all possible combinations of (teacher, student).
 
     params
         teachers: list of guildies
-        heelers: list of heelers
+        students: list of students
 
     returns a dictionary of Pairing objects that's accessed by the repr of
-    the teacher concatenated with the repr of the heeler.
+    the teacher concatenated with the repr of the student.
 
     """
 
@@ -193,23 +172,23 @@ def create_pairings(teachers, heelers):
     # value is a Pairing instance
     pairings = {}
     for t in teachers:
-        for h in heelers:
+        for h in students:
             p = Pairing(t, h)
             pairings[repr(t) + repr(h)] = p
 
     return pairings
 
 
-def create_matrix(pairings, teachers, heelers):
+def create_matrix(pairings, teachers, students):
     """
     Create a cost matrix
 
     params
-        pairings: list of Pairing objects that are all combinations of guildies and heelers
+        pairings: list of Pairing objects that are all combinations of guildies and students
         teachers: list of guildies
-        heelers: list of heelers
+        students: list of students
 
-    returns a cost matrix between the teachers and heelers with padded columns if
+    returns a cost matrix between the teachers and students with padded columns if
     necessary
     """
     num_teachers = len(teachers)
@@ -218,21 +197,21 @@ def create_matrix(pairings, teachers, heelers):
     
     for t in range(num_teachers):
         for h in range(num_teachers):
-            if h >= len(heelers):
+            if h >= len(students):
                 mat[t][h] = 100000
             else:
-                mat[t][h] = pairings[repr(teachers[t]) + repr(heelers[h])].cost
+                mat[t][h] = pairings[repr(teachers[t]) + repr(students[h])].cost
 
     return mat
 
-def match_teachers_heelers(guildies, heelers, pairings):
+def match_teachers_students(guildies, students, pairings):
     """
     Matching Guildies and Heelers using the Hungarian algorithm.
 
     params
         guildies: list of Guildies
-        heelers: list of Heelers
-        pairings: list of Pairing objects that are all combinations of guildies and heelers
+        students: list of Heelers
+        pairings: list of Pairing objects that are all combinations of guildies and students
 
     returns a list of pairings that have been matched by the Hungarian algorithm
     """
@@ -240,22 +219,22 @@ def match_teachers_heelers(guildies, heelers, pairings):
     low = 0
     matched_pairings = []
 
-    # We sort heelers so that each teacher gets students with a range of
+    # We sort students so that each teacher gets students with a range of
     # musical experience. In each iteration, all the teachers get
     # students with about the same musical experience.
-    heelers.sort(key= lambda x: x.musical_exp)
-    while low < len(heelers):
-        high = min(low+len(guildies), len(heelers))
-        heelers_subset = heelers[low:high]
+    students.sort(key= lambda x: x.musical_exp)
+    while low < len(students):
+        high = min(low+len(guildies), len(students))
+        students_subset = students[low:high]
         # if we have failed scheduling, try shuffling the order of the
-        # heelers to try to obtain a different set of matched pairings
-        random.shuffle(heelers_subset)
+        # students to try to obtain a different set of matched pairings
+        random.shuffle(students_subset)
 
         # creates the cost matrix
-        matrix = create_matrix(pairings, guildies, heelers_subset)
+        matrix = create_matrix(pairings, guildies, students_subset)
 
-        if len(heelers_subset) < len(guildies):
-            hun = Hungarian(matrix, real_ncols=len(heelers_subset))
+        if len(students_subset) < len(guildies):
+            hun = Hungarian(matrix, real_ncols=len(students_subset))
         else:
             hun = Hungarian(matrix)
         paired_matrix = hun.run()
@@ -264,9 +243,9 @@ def match_teachers_heelers(guildies, heelers, pairings):
         for i in range(paired_matrix.shape[0]):
             for j in range(paired_matrix.shape[1]):
                 if paired_matrix[i][j] == Hungarian.STAR:
-                    if j >= len(heelers_subset):
+                    if j >= len(students_subset):
                         break
-                    matched_pairing = pairings[repr(guildies[i]) + repr(heelers_subset[j])]
+                    matched_pairing = pairings[repr(guildies[i]) + repr(students_subset[j])]
                     matched_pairings.append(matched_pairing)
 
         low = high 
@@ -274,30 +253,30 @@ def match_teachers_heelers(guildies, heelers, pairings):
     return matched_pairings
 
 
-def brute_force(guildies, heelers, final_schedule):
+def brute_force(guildies, students, final_schedule):
     """
     Warning: Using this function is not recommended.
-    This goes through all possible combinations of guildies and heelers.
+    This goes through all possible combinations of guildies and students.
     It takes forever.
     
     If x and y and lists and len(x) < len(y), this creates
     (y choose x) * x! combinations
     """
-    if len(guildies) <= len(heelers):
+    if len(guildies) <= len(students):
         print('hi')
-        all_pairings = [zip(guildies, x) for x in itertools.permutations(heelers, len(guildies))]
+        all_pairings = [zip(guildies, x) for x in itertools.permutations(students, len(guildies))]
         print(all_pairings)
     else:
         print('hi')
-        all_pairings = [zip(x, heelers) for x in itertools.permutations(guildies, len(heelers))]
+        all_pairings = [zip(x, students) for x in itertools.permutations(guildies, len(students))]
         print(all_pairings)
 
     # DISCONTINUED BECAUSE THIS CRASHES MY COMPUTER
 
-def pseudo_brute_force(guildies, heelers, pairings, final_schedule):
+def pseudo_brute_force(guildies, students, pairings, final_schedule):
     """
     This function is a greedy "brute force" way to assign
-    guildies and heelers to an existing schedule. It doesn't
+    guildies and students to an existing schedule. It doesn't
     examine all possible possibilities, though it could certainly
     be made to do so by a calling function.
     """
@@ -308,12 +287,12 @@ def pseudo_brute_force(guildies, heelers, pairings, final_schedule):
             if not t in final_schedule[d]:
                 # assign first pair that works
                 for g in guildies:
-                    for h in heelers:
+                    for h in students:
                         p = pairings[repr(g) + repr(h)]
                         if p.availabilities[d][t] == 1:
                             if p.cost < 1000:
                                 final_schedule[d][t] = p
-                                heelers.remove(h)
+                                students.remove(h)
 
 
 
@@ -321,15 +300,15 @@ def pseudo_brute_force(guildies, heelers, pairings, final_schedule):
 
 
 # guildies_file = sys.argv[1]
-# heelers_file = sys.argv[2]
+# students_file = sys.argv[2]
 # 
 # guildies = read_names(guildies_file)
-# heelers = read_names(heelers_file, are_heelers=True)
+# students = read_names(students_file, are_students=True)
 # 
 # # pairings is a dictionary that keepss track of all the pairings
-# pairings = create_pairings(guildies, heelers)
+# pairings = create_pairings(guildies, students)
 # 
-# matched_pairings = match_teachers_heelers(guildies, heelers, pairings)
+# matched_pairings = match_teachers_students(guildies, students, pairings)
 # 
 # 
 # leftover_pairings = []
@@ -344,22 +323,22 @@ def pseudo_brute_force(guildies, heelers, pairings, final_schedule):
 #     # Only attempts to redo the assignment 11 times
 #     attempts = 0 
 #     while not schedule_success:
-#         leftover_heelers = [x.heeler for x in leftover_pairings]
+#         leftover_students = [x.student for x in leftover_pairings]
 #         leftover_pairings = []
 #         # Redo assignments for the Heelers left without a lesson time
-#         rematched_pairings = match_teachers_heelers(guildies, leftover_heelers, pairings)
+#         rematched_pairings = match_teachers_students(guildies, leftover_students, pairings)
 #         schedule_success = scheduler.reschedule(final_schedule, rematched_pairings[:], leftover_pairings)
 #         attempts += 1
 #         if attempts > 10:
 #             # try to stick Heelers wherever we can in the schedule
-#             pseudo_brute_force(guildies, leftover_heelers, pairings, final_schedule)
-#             if leftover_heelers:
+#             pseudo_brute_force(guildies, leftover_students, pairings, final_schedule)
+#             if leftover_students:
 #                 # if we get to this point, it means that we would have to try at least a few different
 #                 # combinations of entire permutations of pairings. This would take too long
 #                 # (see the brute_force() function).
 #                 print("""The following Heelers could not be assigned. Finding somewhere to put him/her
 #                         would take longer than you finding a teacher to take him/her on.""")
-#                 print(leftover_heelers)
+#                 print(leftover_students)
 #             break
 # 
 #     # do something
@@ -373,7 +352,7 @@ def pseudo_brute_force(guildies, heelers, pairings, final_schedule):
 #     for t in time_slots:
 #         if t in final_schedule[d]:
 #             p = final_schedule[d][t]
-#             teachers_students_map[p.teacher].append(p.heeler)
+#             teachers_students_map[p.teacher].append(p.student)
 #             count += 1
 # 
 # print(count)
@@ -386,5 +365,5 @@ def pseudo_brute_force(guildies, heelers, pairings, final_schedule):
 # #    print("{} {}".format(t, t.year))
 # #    for p in matched_pairings:
 # #        if p.teacher == t:
-# #            print("\t{}: {}, {}".format(p.heeler, p.heeler.musical_exp, p.heeler.year))
+# #            print("\t{}: {}, {}".format(p.student, p.student.musical_exp, p.student.year))
 
