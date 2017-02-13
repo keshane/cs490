@@ -17,12 +17,13 @@ from forbidden_pairings import forbidden
 import matcher
 import parser
 
-def main(_guildies_file, _heelers_file, are_file_objects=False):
+def main(_guildies_file, _heelers_file):
     guildies_file = _guildies_file
     heelers_file = _heelers_file
 
-    guildies = parser.read_names(guildies_file, are_heelers=False, is_file_object=are_file_objects)
-    heelers = parser.read_names(heelers_file, are_heelers=True, is_file_object=are_file_objects)
+    guildies = parser.read_names(guildies_file, are_students=False)
+    heelers = parser.read_names(heelers_file, are_students=True)
+
 
     # pairings is a dictionary that keeps track of all possible pairings
     pairings = matcher.create_pairings(guildies, heelers)

@@ -1,51 +1,44 @@
 from matcher import Person
 from days_and_times import *
 import misc
-
-index_name = 1
-index_netid = 2
-index_year = 3
-index_musical_exp = 4
-index_known_students = 5
-index_sunday = 6
-index_monday = 7
-index_tuesday = 8
-index_wednesday = 9
-index_thursday = 10 
-index_friday = 11 
-index_saturday = 12
+import re
 
 def parse_columns(columns):
+    indices = {}
     index = 0
     for column in columns:
         column = column.strip().lower()
 
-        if column == 'name':
-            index_name = index
-        elif column == 'netid':
-            index_netid = index
-        elif column == 'year':
-            index_year = index
-        elif column == 'musical experience':
-            index_musical_exp = index
-        elif column == 'known students':
-            index_known_students = index
-        elif column == 'sunday':
-            index_sunday = index
-        elif column == 'monday':
-            index_monday = index
-        elif column == 'tuesday':
-            index_tuesday = index
-        elif column == 'wednesday':
-            index_wednesday = index
-        elif column == 'thursday':
-            index_thursday = index
-        elif column == 'friday':
-            index_friday = index
-        elif column == 'saturday':
-            index_saturday = index
+        if re.search('name', column):
+            indices['name'] = index
+        elif re.search('netid', column):
+            indices['netid'] = index
+        elif re.search('year', column):
+            indices['year'] = index
+        elif re.search('musical experience', column):
+            indices['musical_exp'] = index
+        elif re.search('known students', column):
+            indices['known_students'] = index
+        elif re.search('sunday', column):
+            indices['sunday'] = index
+        elif re.search('monday', column):
+            indices['monday'] = index
+        elif re.search('tuesday', column):
+            indices['tuesday'] = index
+        elif re.search('wednesday', column):
+            indices['wednesday'] = index
+        elif re.search('thursday', column):
+            indices['thursday'] = index
+        elif re.search('friday', column):
+            indices['friday'] = index
+        elif re.search('saturday', column):
+            indices['saturday'] = index
 
         index += 1
+
+    return indices
+
+
 
 def read_names(file_name, are_students=True):
     """
@@ -62,30 +55,32 @@ def read_names(file_name, are_students=True):
     group = []
 
     # parse first line (column names)
-    parse_columns(fd.readline())
+    indices = parse_columns(fd.readline().split("\t"))
+
+
+    indices_days = [indices['sunday'], indices['monday'], indices['tuesday'],
+                    indices['wednesday'], indices['thursday'], indices['friday'],
+                    indices['saturday']]
 
     for line in fd:
         attributes = line.split("\t")
-        name = attributes[index_name]
-        netid = attributes[index_netid]
-        musical_exp = int(attributes[index_musical_exp])
-        year = years[attributes[index_year]]
+        name = attributes[indices['name']]
+        netid = attributes[indices['netid']]
+        year = years[attributes[indices['year']]]
 
-        index_days = [index_sunday, index_monday, index_tuesday,
-                      index_wednesday, index_thursday, index_friday,
-                      index_saturday]
+        if are_students:
+            musical_exp = int(attributes[indices['musical_exp']])
 
         if not are_students:
-            known_students = [x.strip() for x in attributes[index_known_students].split(',')]
+            known_students = [x.strip() for x in attributes[indices['known_students']].split(',')]
             for known_student in known_students:
                 misc.forbidden.append((netid, known_student))
 
 
-        availability = {}
-        for day_index in range(7):
-            attribute_index = index_days[day_index]
 
-            times = [x.strip() for x in attributes[attribute_index].split(',')]
+        availability = {}
+        for i in range(7):
+            times = [x.strip() for x in attributes[indices_days[i]].split(',')]
 
             available_map = {}
             for t in time_slots:
@@ -94,10 +89,13 @@ def read_names(file_name, are_students=True):
                 else:
                     available_map[t] = 0
 
-            day_name = days_of_week[day_index]
+            day_name = days_of_week[i]
             availability[day_name] = available_map
 
-        person = Person(availability, name, netid, musical_exp=musical_exp, year=year)
+        if are_students:
+            person = Person(availability, name, netid, musical_exp=musical_exp, year=year)
+        else:
+            person = Person(availability, name, netid, year=year)
         group.append(person)
 
     return group
